@@ -1,15 +1,20 @@
 package cn.lujiawu.garmin2suunto;
 
-import okhttp3.CookieJar;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
+import okhttp3.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OkHttpClientManager {
 
+    private static AutoLogin autoLogin;
+
     private static OkHttpClient okHttpClient;
+
+    public static void setAutoLogin(AutoLogin autoLogin) {
+        OkHttpClientManager.autoLogin = autoLogin;
+    }
 
     public static synchronized OkHttpClient getInstance() {
 
@@ -22,10 +27,15 @@ public class OkHttpClientManager {
                 .cookieJar(new SimpleCookieJar())
                 .followSslRedirects(true)
                 .followRedirects(false)
+                .addInterceptor(new AutoLoginResponseInterceptor())
                 .build();
 
         return okHttpClient;
 
+    }
+
+    public static interface AutoLogin {
+        public boolean autoLogin(String url);
     }
 
     private static class SimpleCookieJar implements CookieJar {
@@ -44,5 +54,35 @@ public class OkHttpClientManager {
 //                        cookieStore.stream().forEach(System.out::println);
             return cookieStore;
         }
+    }
+
+    private static class AutoLoginResponseInterceptor implements Interceptor {
+
+        private final String TAG = getClass().getSimpleName();
+
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+            Response response = chain.proceed(request);
+
+//            System.out.println(" >>>> intercepter " );
+//            System.out.println(response);
+
+            if (response.code() == 403 && null != OkHttpClientManager.autoLogin) {
+
+                System.err.println(response);
+                boolean success = OkHttpClientManager.autoLogin.autoLogin(request.url().host());
+
+                if (success) {
+                    System.out.println("auto login success! ");
+                    response = chain.proceed(request);
+                } else {
+                    System.err.println("auto login fail! ");
+                }
+            }
+
+            return response;
+        }
+
     }
 }
