@@ -19,23 +19,7 @@ public class OkHttpClientManager {
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         okHttpClient = builder
-                .cookieJar(new CookieJar() {
-
-                    private final List cookieStore = new ArrayList();
-
-                    @Override
-                    public void saveFromResponse(HttpUrl url, List cookies) {
-//                        cookieStore.clear();
-                        cookieStore.addAll(cookies);
-                    }
-
-                    @Override
-                    public List loadForRequest(HttpUrl url) {
-                        System.out.println(">>>>> " + url.toString());
-//                        cookieStore.stream().forEach(System.out::println);
-                        return cookieStore;
-                    }
-                })
+                .cookieJar(new SimpleCookieJar())
                 .followSslRedirects(true)
                 .followRedirects(false)
                 .build();
@@ -44,4 +28,21 @@ public class OkHttpClientManager {
 
     }
 
+    private static class SimpleCookieJar implements CookieJar {
+
+        private final List cookieStore = new ArrayList();
+
+        @Override
+        public void saveFromResponse(HttpUrl url, List cookies) {
+//                        cookieStore.clear();
+            cookieStore.addAll(cookies);
+        }
+
+        @Override
+        public List loadForRequest(HttpUrl url) {
+//            System.out.println(">>>>> " + url.toString());
+//                        cookieStore.stream().forEach(System.out::println);
+            return cookieStore;
+        }
+    }
 }

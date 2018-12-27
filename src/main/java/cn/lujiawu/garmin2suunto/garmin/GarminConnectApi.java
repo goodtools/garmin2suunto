@@ -39,15 +39,6 @@ public class GarminConnectApi {
             }
         }
 
-        System.out.println(">>>>");
-
-        String url = "https://connect.garmin.cn/modern/proxy/activity-service/activity/50360706";
-        Request request = new Request.Builder().get().url(url).build();
-        Response activity = client.newCall(request).execute();
-        int code2 = activity.code();
-        System.out.println(code2);
-        System.out.println(activity.body().string());
-
         return true;
 
     }
