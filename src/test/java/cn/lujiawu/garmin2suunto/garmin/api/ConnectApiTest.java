@@ -1,13 +1,17 @@
 package cn.lujiawu.garmin2suunto.garmin.api;
 
+import at.meeximum.activitymoverfx.models.gson.garmin.Activity;
+import at.meeximum.activitymoverfx.models.json.garmin.GActivityDetails;
 import cn.lujiawu.garmin2suunto.AutoLoginer;
 import cn.lujiawu.garmin2suunto.OkHttpClientManager;
+import cn.lujiawu.garmin2suunto.garmin.ActivityWrapper;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
+import rx.schedulers.Schedulers;
 
 public class ConnectApiTest {
 
@@ -30,16 +34,48 @@ public class ConnectApiTest {
     }
 
     @Test
-    public void test() throws Exception {
+    public void testWrongWay() throws Exception {
+
+        Observable<Observable<ActivityWrapper>> map = garminConnectApi.latest20()
+                .flatMap(activities -> Observable.from(activities))
+                .map(activity -> {
+                    String activityId = activity.getActivityId().toString();
+                    Observable<Activity> activityObservable = garminConnectApi.garminActivity(activityId);
+                    Observable<GActivityDetails> detailsObservable = garminConnectApi.garminActivityDetails(activityId);
+                    Observable<ActivityWrapper> activityWrapperObservable =
+                            activityObservable.zipWith(detailsObservable, (act, detail) -> new ActivityWrapper(activityId, act, detail));
+                    return activityWrapperObservable;
+                }).observeOn(Schedulers.newThread());
+
+        Observable.switchOnNext(map)
+                .subscribe(item -> System.out.println(item.getActivity().getActivityName()));
+
+
+    }
+
+    @Test
+    public void testParal() throws Exception {
 
         garminConnectApi.latest20()
                 .flatMap(activities -> Observable.from(activities))
-                .map(activity -> {
-                    System.out.println(activity.getActivityId());
-                    System.out.println(activity.getActivityName());
-                    return activity.getActivityId();
+                .flatMap(activity -> {
+                    String activityId = activity.getActivityId().toString();
+                    Observable<Activity> activityObservable = garminConnectApi.garminActivity(activityId);
+                    Observable<GActivityDetails> detailsObservable = garminConnectApi.garminActivityDetails(activityId);
+                    Observable<ActivityWrapper> activityWrapperObservable =
+                            activityObservable.zipWith(detailsObservable, (act, detail) -> new ActivityWrapper(activityId, act, detail));
+                    return activityWrapperObservable
+                            .observeOn(Schedulers.newThread())
+                            .subscribeOn(Schedulers.newThread());
                 })
-                .subscribe();
+                .observeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(wapper -> {
+                    System.out.println(Thread.currentThread().getName() + ">>>" + wapper.getId());
+                    System.out.println(wapper.getActivity().getActivityName());
+                });
+
+        Thread.sleep(200000);
 
 
     }

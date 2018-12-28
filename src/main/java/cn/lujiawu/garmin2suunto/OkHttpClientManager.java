@@ -63,7 +63,10 @@ public class OkHttpClientManager {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
+
+//            System.out.println(" >>> request " + request.url().toString());
             Response response = chain.proceed(request);
+//            System.out.println(" <<< response " + request.url().toString());
 
 //            System.out.println(" >>>> intercepter " );
 //            System.out.println(response);
