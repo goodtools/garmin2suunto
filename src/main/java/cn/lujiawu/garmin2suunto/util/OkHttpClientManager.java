@@ -1,4 +1,4 @@
-package cn.lujiawu.garmin2suunto;
+package cn.lujiawu.garmin2suunto.util;
 
 import okhttp3.*;
 

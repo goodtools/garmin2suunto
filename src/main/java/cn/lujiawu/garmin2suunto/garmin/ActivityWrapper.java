@@ -1,6 +1,7 @@
 package cn.lujiawu.garmin2suunto.garmin;
 
 import at.meeximum.activitymoverfx.models.gson.garmin.Activity;
+import at.meeximum.activitymoverfx.models.gson.garmin.Splits;
 import at.meeximum.activitymoverfx.models.json.garmin.GActivityDetails;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,8 @@ public class ActivityWrapper {
     private Activity activity;
 
     private GActivityDetails details;
+
+    private Splits splits;
 
     public ActivityWrapper(String id) {
         this.id = id;

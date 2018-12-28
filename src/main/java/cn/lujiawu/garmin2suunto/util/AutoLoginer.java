@@ -1,6 +1,7 @@
-package cn.lujiawu.garmin2suunto;
+package cn.lujiawu.garmin2suunto.util;
 
 import cn.lujiawu.garmin2suunto.garmin.GarminConnectApi;
+import cn.lujiawu.garmin2suunto.util.OkHttpClientManager;
 
 import java.io.FileInputStream;
 import java.util.Properties;

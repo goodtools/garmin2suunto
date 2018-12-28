@@ -1,6 +1,6 @@
 package cn.lujiawu.garmin2suunto.garmin;
 
-import cn.lujiawu.garmin2suunto.OkHttpClientManager;
+import cn.lujiawu.garmin2suunto.util.OkHttpClientManager;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

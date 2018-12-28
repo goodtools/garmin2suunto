@@ -1,9 +1,12 @@
 package cn.lujiawu.garmin2suunto.garmin.api;
 
+import at.meeximum.activitymoverfx.converter.GarminConverter;
 import at.meeximum.activitymoverfx.models.gson.garmin.Activity;
+import at.meeximum.activitymoverfx.models.gson.garmin.Splits;
 import at.meeximum.activitymoverfx.models.json.garmin.GActivityDetails;
-import cn.lujiawu.garmin2suunto.AutoLoginer;
-import cn.lujiawu.garmin2suunto.OkHttpClientManager;
+import at.meeximum.activitymoverfx.models.json.suunto.Move;
+import cn.lujiawu.garmin2suunto.util.AutoLoginer;
+import cn.lujiawu.garmin2suunto.util.OkHttpClientManager;
 import cn.lujiawu.garmin2suunto.garmin.ActivityWrapper;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -43,7 +46,7 @@ public class ConnectApiTest {
                     Observable<Activity> activityObservable = garminConnectApi.garminActivity(activityId);
                     Observable<GActivityDetails> detailsObservable = garminConnectApi.garminActivityDetails(activityId);
                     Observable<ActivityWrapper> activityWrapperObservable =
-                            activityObservable.zipWith(detailsObservable, (act, detail) -> new ActivityWrapper(activityId, act, detail));
+                            activityObservable.zipWith(detailsObservable, (act, detail) -> new ActivityWrapper(activityId, act, detail,null));
                     return activityWrapperObservable;
                 }).observeOn(Schedulers.newThread());
 
@@ -58,12 +61,18 @@ public class ConnectApiTest {
 
         garminConnectApi.latest20()
                 .flatMap(activities -> Observable.from(activities))
+                .first()
                 .flatMap(activity -> {
                     String activityId = activity.getActivityId().toString();
+
                     Observable<Activity> activityObservable = garminConnectApi.garminActivity(activityId);
                     Observable<GActivityDetails> detailsObservable = garminConnectApi.garminActivityDetails(activityId);
+                    Observable<Splits> splitsObservable = garminConnectApi.garminActivitySplits(activityId);
+
                     Observable<ActivityWrapper> activityWrapperObservable =
-                            activityObservable.zipWith(detailsObservable, (act, detail) -> new ActivityWrapper(activityId, act, detail));
+                            Observable.zip(activityObservable, detailsObservable, splitsObservable,
+                                    (a, b, c) -> new ActivityWrapper(activityId, a, b, c));
+
                     return activityWrapperObservable
                             .observeOn(Schedulers.newThread())
                             .subscribeOn(Schedulers.newThread());
@@ -73,9 +82,35 @@ public class ConnectApiTest {
                 .subscribe(wapper -> {
                     System.out.println(Thread.currentThread().getName() + ">>>" + wapper.getId());
                     System.out.println(wapper.getActivity().getActivityName());
+                    System.out.println(wapper.getActivity().getSummaryDTO().getStartTimeGMT());
+                    System.out.println(wapper.getActivity().getSummaryDTO().getStartTimeLocal());
+
+                    try {
+                        Move move = GarminConverter.convert(wapper.getActivity(),wapper.getSplits(),wapper.getDetails());
+                        System.out.println(move);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                 });
 
         Thread.sleep(200000);
+
+
+    }
+
+
+    @Test
+    public void test3() throws Exception {
+
+//        garminConnectApi.search("2018-08-08")
+//                .flatMap(activities -> Observable.from(  activities))
+//                .toList().subscribe()
+//                .subscribe(activity -> {
+//                    System.out.println(Thread.currentThread().getName() + ">>>" + activity.getActivityId());
+//                    System.out.println(activity);
+//                });
+
 
 
     }
