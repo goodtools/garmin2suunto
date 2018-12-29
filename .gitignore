@@ -26,3 +26,4 @@
 /.nb-gradle/
 
 config.properties
+scp-bwg.sh
