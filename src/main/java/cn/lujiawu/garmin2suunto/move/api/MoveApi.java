@@ -1,7 +1,5 @@
 package cn.lujiawu.garmin2suunto.move.api;
 
-import at.meeximum.activitymoverfx.models.json.suunto.Move;
-import at.meeximum.activitymoverfx.models.json.suunto.MoveItem;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;

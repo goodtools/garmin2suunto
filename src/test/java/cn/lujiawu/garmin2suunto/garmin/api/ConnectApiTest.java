@@ -1,7 +1,7 @@
 package cn.lujiawu.garmin2suunto.garmin.api;
 
-import at.meeximum.activitymoverfx.converter.GarminConverter;
-import at.meeximum.activitymoverfx.models.json.suunto.Move;
+import cn.lujiawu.garmin2suunto.util.Act2MoveConverter;
+import cn.lujiawu.garmin2suunto.move.api.Move;
 import cn.lujiawu.garmin2suunto.util.AutoLoginer;
 import cn.lujiawu.garmin2suunto.util.OkHttpClientManager;
 import cn.lujiawu.garmin2suunto.garmin.ActivityWrapper;
@@ -83,7 +83,7 @@ public class ConnectApiTest {
                     System.out.println(wapper.getActivity().getSummaryDTO().getStartTimeLocal());
 
                     try {
-                        Move move = GarminConverter.convert(wapper.getActivity(),wapper.getActivitySplits(),wapper.getDetails());
+                        Move move = Act2MoveConverter.convert(wapper.getActivity(),wapper.getActivitySplits(),wapper.getDetails());
                         System.out.println(move);
                     } catch (Exception e) {
                         e.printStackTrace();

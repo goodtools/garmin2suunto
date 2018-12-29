@@ -1,12 +1,12 @@
 package cn.lujiawu.garmin2suunto;
 
-import at.meeximum.activitymoverfx.converter.GarminConverter;
+import cn.lujiawu.garmin2suunto.util.Act2MoveConverter;
 import cn.lujiawu.garmin2suunto.garmin.api.Activity;
 import cn.lujiawu.garmin2suunto.garmin.api.ActivitySplits;
 import cn.lujiawu.garmin2suunto.garmin.api.ActivityDetail;
 import cn.lujiawu.garmin2suunto.garmin.api.ActivityItem;
-import at.meeximum.activitymoverfx.models.json.suunto.Move;
-import at.meeximum.activitymoverfx.models.json.suunto.MoveItem;
+import cn.lujiawu.garmin2suunto.move.api.Move;
+import cn.lujiawu.garmin2suunto.move.api.MoveItem;
 import cn.lujiawu.garmin2suunto.garmin.GarminConfiguration;
 import cn.lujiawu.garmin2suunto.garmin.api.ConnectApi;
 import cn.lujiawu.garmin2suunto.move.api.MoveApi;
@@ -71,7 +71,7 @@ public class SyncService {
         Observable<ActivitySplits> splitsObservable = garminConnectApi.garminActivitySplits(activityId);
 
         return Observable.zip(activityObservable, detailsObservable, splitsObservable,
-                (a, b, c) -> GarminConverter.convert(a, c, b));
+                (a, b, c) -> Act2MoveConverter.convert(a, c, b));
 
 
     }

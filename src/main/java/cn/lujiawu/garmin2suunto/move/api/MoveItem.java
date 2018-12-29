@@ -1,4 +1,4 @@
-package at.meeximum.activitymoverfx.models.json.suunto;
+package cn.lujiawu.garmin2suunto.move.api;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;

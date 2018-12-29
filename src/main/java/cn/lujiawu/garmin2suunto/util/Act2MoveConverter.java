@@ -3,22 +3,22 @@
 // (powered by Fernflower decompiler)
 //
 
-package at.meeximum.activitymoverfx.converter;
+package cn.lujiawu.garmin2suunto.util;
 
 import cn.lujiawu.garmin2suunto.garmin.api.Activity;
-import cn.lujiawu.garmin2suunto.garmin.api.ActivitySplits;
 import cn.lujiawu.garmin2suunto.garmin.api.ActivityDetail;
-import at.meeximum.activitymoverfx.models.json.suunto.Move;
-import at.meeximum.activitymoverfx.models.json.suunto.MoveMark;
-import at.meeximum.activitymoverfx.models.json.suunto.SampleSet;
-import at.meeximum.activitymoverfx.models.json.suunto.TrackPoint;
+import cn.lujiawu.garmin2suunto.garmin.api.ActivitySplits;
+import cn.lujiawu.garmin2suunto.move.api.Move;
+import cn.lujiawu.garmin2suunto.move.api.MoveMark;
+import cn.lujiawu.garmin2suunto.move.api.SampleSet;
+import cn.lujiawu.garmin2suunto.move.api.TrackPoint;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GarminConverter {
+public class Act2MoveConverter {
 
     public static Move convert(Activity activity, ActivitySplits splits, ActivityDetail detail) {
 
@@ -94,8 +94,8 @@ public class GarminConverter {
         }
 
         move.setMarks(convertMoveMarks(splits));
-        move.setSamples(convertSampleSet(detail));
-        move.setTrack(convertTrackPoint(detail));
+        move.setSamples(new Move.Samples(convertSampleSet(detail)));
+        move.setTrack(new Move.Track(convertTrackPoint(detail)));
 
         return move;
     }
@@ -144,7 +144,7 @@ public class GarminConverter {
         ActivityDetail.MetricIndex index = new ActivityDetail.MetricIndex(detail.getMetricDescriptors());
         return detail.getActivityDetailMetrics()
                 .stream()
-                .map(m -> GarminConverter.convert(m, index))
+                .map(m -> Act2MoveConverter.convert(m, index))
                 .collect(Collectors.toList());
     }
 
@@ -152,7 +152,7 @@ public class GarminConverter {
         if (null == detail.getGeoPolylineDTO() || null == detail.getGeoPolylineDTO().getPolyline()) {
             return Collections.EMPTY_LIST;
         }
-        return detail.getGeoPolylineDTO().getPolyline().stream().map(GarminConverter::convert).collect(Collectors.toList());
+        return detail.getGeoPolylineDTO().getPolyline().stream().map(Act2MoveConverter::convert).collect(Collectors.toList());
     }
 
     private static SampleSet convert(ActivityDetail.ActivityDetailMetric activityDetailMetric, ActivityDetail.MetricIndex index) {
