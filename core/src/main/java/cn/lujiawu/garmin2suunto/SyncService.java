@@ -39,6 +39,16 @@ public class SyncService {
 
     public Observable<List<ActivityItem>> getActivityItems(String id, String startDate) {
 
+        if (StringUtils.isAnyEmpty(id, startDate)) {
+            return garminConnectApi.latest20()
+                    .flatMap(activities -> Observable.from(activities))
+                    .toList()
+                    .map(list -> {
+                        Collections.reverse(list);
+                        return list;
+                    });
+        }
+
         return garminConnectApi.search(startDate)
                 .flatMap(activities -> Observable.from(activities))
                 .toList()

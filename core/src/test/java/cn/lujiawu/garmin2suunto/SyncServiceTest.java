@@ -1,7 +1,6 @@
 package cn.lujiawu.garmin2suunto;
 
 import cn.lujiawu.garmin2suunto.garmin.api.ActivityItem;
-import cn.lujiawu.garmin2suunto.move.api.MoveApi;
 import com.google.gson.Gson;
 import org.junit.Test;
 
@@ -21,6 +20,7 @@ public class SyncServiceTest {
 
     String activityIdOutdoor = "50453091";
     String activityIdIndoor = "50360706";
+
     @Test
     public void testGetOutdoorMove() {
         SyncService syncService = new SyncService();

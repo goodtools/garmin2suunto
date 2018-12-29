@@ -49,6 +49,15 @@ public class MoveItem implements Serializable {
         }
     }
 
-
-
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("MoveItem {");
+        sb.append("activityID=").append(activityID);
+        sb.append(", moveId=").append(moveId);
+        sb.append(", notes='").append(notes).append('\'');
+        sb.append(", lastModifiedDate='").append(lastModifiedDate).append('\'');
+        sb.append(", localStartTime='").append(localStartTime).append('\'');
+        sb.append('}');
+        return sb.toString().replaceAll("\n","");
+    }
 }

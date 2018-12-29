@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
-import rx.Observable;
 
 @Service
 public class ReactorSyncService {
@@ -27,11 +26,11 @@ public class ReactorSyncService {
                     .flatMap(last -> {
                         emmiter.next("1.2 finish get lastest move ");
                         if (null == last.getMoveId()) {
-                            emmiter.next("1.3 get lastest move null");
-                            emmiter.complete();
-                            return Observable.empty();
+                            emmiter.next("1.3 get lastest move null , start to sync latest 20 garmin records");
+                            return syncService.getActivityItems("", "");
                         }
-                        emmiter.next("1.3 finish get lastest move " + last.getGarminActivityId());
+
+                        emmiter.next("1.3 finish get lastest move " + last.toString());
                         emmiter.next("2.1 start  get garmin history from " + last.getGarminActivityId() + " " + last.getStartDate());
                         //2. 获取garmin历史记录
                         return syncService.getActivityItems(last.getGarminActivityId(), last.getStartDate());

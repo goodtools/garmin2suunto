@@ -25,5 +25,7 @@
 /nbdist/
 /.nb-gradle/
 
+## 自己的私密信息
 config.properties
+webapp/src/main/resources/application.properties
 scp-bwg.sh
