@@ -33,7 +33,7 @@ public class SyncServiceTest {
     }
 
     String email = "jiawu.lu@gmail.com";
-    String key = MoveApi.USER_KEY;
+    String key = "";
 
     @Test
     public void testMoves() {

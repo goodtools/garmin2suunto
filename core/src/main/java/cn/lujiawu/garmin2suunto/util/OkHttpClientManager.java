@@ -64,21 +64,13 @@ public class OkHttpClientManager {
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
 
-//            System.out.println(" >>> request " + request.url().toString());
             Response response = chain.proceed(request);
-//            System.out.println(" <<< response " + request.url().toString());
-
-//            System.out.println(" >>>> intercepter " );
-//            System.out.println(response);
-
-            if (response.code() == 400){
-                System.err.println(response.headers());
-                System.err.println(response.body().string());
+            if (response.code() != 200 && response.code() != 304 && response.code() != 403) {
+                printResponse(response);
             }
 
             if (response.code() == 403 && null != OkHttpClientManager.autoLogin) {
 
-                System.err.println(response);
                 boolean success = OkHttpClientManager.autoLogin.autoLogin(request.url().host());
 
                 if (success) {
@@ -90,6 +82,17 @@ public class OkHttpClientManager {
             }
 
             return response;
+        }
+
+        private void printResponse(Response response) throws IOException {
+            ResponseBody body = response.body();
+            try {
+                System.err.println(response.code());
+                System.err.println(response.headers());
+                System.err.println(body.string());
+            } finally {
+                body.close();
+            }
         }
 
     }
