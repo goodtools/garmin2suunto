@@ -29,8 +29,6 @@ public class ConnectApiTest {
 
         garminConnectApi = retrofit.create(ConnectApi.class);
 
-        OkHttpClientManager.setAutoLogin(new AutoLoginer());
-
     }
 
     @Test

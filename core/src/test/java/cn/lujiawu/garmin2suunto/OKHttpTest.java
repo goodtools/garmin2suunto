@@ -14,7 +14,7 @@ public class OKHttpTest {
     @Test
     public void logonGarmin() throws Exception {
 
-        OkHttpClientManager.setAutoLogin(new AutoLoginer());
+        OkHttpClientManager.init();
         OkHttpClient client = OkHttpClientManager.getInstance();
         String url = "https://connect.garmin.cn/modern/proxy/activity-service/activity/50360706";
         Request request = new Request.Builder().get().url(url).build();
@@ -30,7 +30,6 @@ public class OKHttpTest {
     @Test
     public void testSuunto() throws Exception {
 
-        OkHttpClientManager.setAutoLogin(new AutoLoginer());
         OkHttpClient client = OkHttpClientManager.getInstance();
         String url = "https://uiservices.movescount.com/moves/private?version=1.1.0&appkey=uFiPE28bwLykgnTlYyvlS7GzgaAcIRP3I85FCMFJUDFwTa7hcAihvk7x9SJEC5CP&email=jiawu.lu@gmail.com&userkey=e4acbce2-4a3e-4f34-b806-d81694f59384";
         Request request = new Request.Builder().get().url(url).build();

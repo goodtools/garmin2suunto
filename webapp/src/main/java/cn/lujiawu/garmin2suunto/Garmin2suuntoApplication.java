@@ -1,16 +1,17 @@
 package cn.lujiawu.garmin2suunto;
 
+import cn.lujiawu.garmin2suunto.garmin.AutoLoginInterceptor;
+import cn.lujiawu.garmin2suunto.garmin.SimpleCookieJar;
 import cn.lujiawu.garmin2suunto.util.AutoLoginer;
 import cn.lujiawu.garmin2suunto.util.OkHttpClientManager;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @EnableConfigurationProperties
 @SpringBootApplication
@@ -32,9 +33,14 @@ public class Garmin2suuntoApplication implements InitializingBean {
             throw new RuntimeException("sync config is error " + syncConfig);
         }
 
-        OkHttpClientManager.setAutoLogin(autoLogin);
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
-        Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
+        SimpleCookieJar simpleCookieJar = new SimpleCookieJar();
+        AutoLoginInterceptor autoLoginInterceptor = new AutoLoginInterceptor(autoLogin,simpleCookieJar);
+
+        OkHttpClientManager.init(logging,autoLoginInterceptor,simpleCookieJar);
+
     }
 
 }

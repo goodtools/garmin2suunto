@@ -6,7 +6,9 @@ import cn.lujiawu.garmin2suunto.move.api.Move;
 import cn.lujiawu.garmin2suunto.move.api.MoveApi;
 import cn.lujiawu.garmin2suunto.move.api.MoveItem;
 import cn.lujiawu.garmin2suunto.move.api.MoveResult;
-import cn.lujiawu.garmin2suunto.util.*;
+import cn.lujiawu.garmin2suunto.util.Act2MoveConverter;
+import cn.lujiawu.garmin2suunto.util.DateUtils;
+import cn.lujiawu.garmin2suunto.util.RetrofitHelper;
 import org.apache.commons.lang3.StringUtils;
 import rx.Observable;
 
@@ -23,9 +25,6 @@ public class SyncService {
     }
 
     public void init() {
-        if (null == OkHttpClientManager.autoLogin) {
-            OkHttpClientManager.setAutoLogin(new AutoLoginer());
-        }
         garminConnectApi = RetrofitHelper.createApi(GarminConfiguration.GARMIN_CN, ConnectApi.class);
         moveApi = RetrofitHelper.createApi(MoveApi.HOST, MoveApi.class);
     }

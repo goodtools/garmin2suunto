@@ -1,12 +1,12 @@
 package cn.lujiawu.garmin2suunto.util;
 
+import cn.lujiawu.garmin2suunto.garmin.AutoLogin;
 import cn.lujiawu.garmin2suunto.garmin.GarminConnectApi;
-import cn.lujiawu.garmin2suunto.util.OkHttpClientManager;
 
 import java.io.FileInputStream;
 import java.util.Properties;
 
-public class AutoLoginer implements OkHttpClientManager.AutoLogin {
+public class AutoLoginer implements AutoLogin {
 
     @Override
     public boolean autoLogin(String url) {

@@ -1,10 +1,19 @@
 package cn.lujiawu.garmin2suunto;
 
+import cn.lujiawu.garmin2suunto.garmin.AutoLoginInterceptor;
+import cn.lujiawu.garmin2suunto.garmin.SimpleCookieJar;
 import cn.lujiawu.garmin2suunto.garmin.api.ActivityItem;
+import cn.lujiawu.garmin2suunto.util.AutoLoginer;
+import cn.lujiawu.garmin2suunto.util.OkHttpClientManager;
 import com.google.gson.Gson;
 import org.junit.Test;
 
 public class SyncServiceTest {
+
+    static {
+        SimpleCookieJar simpleCookieJar = new SimpleCookieJar();
+        OkHttpClientManager.init(null, new AutoLoginInterceptor(new AutoLoginer(), simpleCookieJar), simpleCookieJar);
+    }
 
     @Test
     public void test() {

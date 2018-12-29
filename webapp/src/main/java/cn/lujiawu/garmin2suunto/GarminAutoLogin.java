@@ -1,12 +1,12 @@
 package cn.lujiawu.garmin2suunto;
 
+import cn.lujiawu.garmin2suunto.garmin.AutoLogin;
 import cn.lujiawu.garmin2suunto.garmin.GarminConnectApi;
-import cn.lujiawu.garmin2suunto.util.OkHttpClientManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GarminAutoLogin implements OkHttpClientManager.AutoLogin {
+public class GarminAutoLogin implements AutoLogin {
 
     @Autowired
     private SyncConfig syncConfig;

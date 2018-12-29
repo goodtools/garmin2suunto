@@ -1,99 +1,57 @@
 package cn.lujiawu.garmin2suunto.util;
 
-import okhttp3.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import cn.lujiawu.garmin2suunto.garmin.AutoLoginInterceptor;
+import cn.lujiawu.garmin2suunto.garmin.SimpleCookieJar;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
 
 public class OkHttpClientManager {
 
-    public static AutoLogin autoLogin;
+    private static Interceptor autoLoginInterceptor;
+    private static Interceptor loggingInterceptor;
+    private static SimpleCookieJar cookieJar;
 
     private static OkHttpClient okHttpClient;
 
-    public static void setAutoLogin(AutoLogin autoLogin) {
-        OkHttpClientManager.autoLogin = autoLogin;
+    public static void init(Interceptor loggingInterceptor, Interceptor autoLoginInterceptor, SimpleCookieJar simpleCookieJar) {
+        OkHttpClientManager.autoLoginInterceptor = autoLoginInterceptor;
+        OkHttpClientManager.loggingInterceptor = loggingInterceptor;
+        OkHttpClientManager.cookieJar = simpleCookieJar;
+    }
+
+    public static void init() {
+        SimpleCookieJar simpleCookieJar = new SimpleCookieJar();
+        OkHttpClientManager.init(null, new AutoLoginInterceptor(new AutoLoginer(), simpleCookieJar), simpleCookieJar);
+
     }
 
     public static synchronized OkHttpClient getInstance() {
+
 
         if (null != okHttpClient) {
             return okHttpClient;
         }
 
+        if (null == cookieJar){
+            OkHttpClientManager.init();
+        }
+
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        okHttpClient = builder
-                .cookieJar(new SimpleCookieJar())
+        builder.cookieJar(cookieJar)
                 .followSslRedirects(true)
-                .followRedirects(false)
-                .addInterceptor(new AutoLoginResponseInterceptor())
-                .build();
+                .followRedirects(false);
+
+        if (null != loggingInterceptor) {
+            builder.addInterceptor(loggingInterceptor);
+        }
+        if (null != autoLoginInterceptor) {
+            builder.addInterceptor(autoLoginInterceptor);
+        }
+
+        okHttpClient = builder.build();
 
         return okHttpClient;
-
     }
 
-    public static interface AutoLogin {
-        public boolean autoLogin(String url);
-    }
 
-    private static class SimpleCookieJar implements CookieJar {
-
-        private final List cookieStore = new ArrayList();
-
-        @Override
-        public void saveFromResponse(HttpUrl url, List cookies) {
-//                        cookieStore.clear();
-            cookieStore.addAll(cookies);
-        }
-
-        @Override
-        public List loadForRequest(HttpUrl url) {
-//            System.out.println(">>>>> " + url.toString());
-//                        cookieStore.stream().forEach(System.out::println);
-            return cookieStore;
-        }
-    }
-
-    private static class AutoLoginResponseInterceptor implements Interceptor {
-
-        private final String TAG = getClass().getSimpleName();
-
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            Request request = chain.request();
-
-            Response response = chain.proceed(request);
-            if (response.code() != 200 && response.code() != 304 && response.code() != 403) {
-                printResponse(response);
-            }
-
-            if (response.code() == 403 && null != OkHttpClientManager.autoLogin) {
-
-                boolean success = OkHttpClientManager.autoLogin.autoLogin(request.url().host());
-
-                if (success) {
-                    System.out.println("auto login success! ");
-                    response = chain.proceed(request);
-                } else {
-                    System.err.println("auto login fail! ");
-                }
-            }
-
-            return response;
-        }
-
-        private void printResponse(Response response) throws IOException {
-            ResponseBody body = response.body();
-            try {
-                System.err.println(response.code());
-                System.err.println(response.headers());
-                System.err.println(body.string());
-            } finally {
-                body.close();
-            }
-        }
-
-    }
 }
