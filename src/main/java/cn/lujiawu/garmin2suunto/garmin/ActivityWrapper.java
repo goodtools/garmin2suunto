@@ -1,8 +1,8 @@
 package cn.lujiawu.garmin2suunto.garmin;
 
-import at.meeximum.activitymoverfx.models.gson.garmin.Activity;
-import at.meeximum.activitymoverfx.models.gson.garmin.Splits;
-import at.meeximum.activitymoverfx.models.json.garmin.ActivityDetail;
+import cn.lujiawu.garmin2suunto.garmin.api.Activity;
+import cn.lujiawu.garmin2suunto.garmin.api.ActivitySplits;
+import cn.lujiawu.garmin2suunto.garmin.api.ActivityDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ public class ActivityWrapper {
 
     private ActivityDetail details;
 
-    private Splits splits;
+    private ActivitySplits activitySplits;
 
     public ActivityWrapper(String id) {
         this.id = id;

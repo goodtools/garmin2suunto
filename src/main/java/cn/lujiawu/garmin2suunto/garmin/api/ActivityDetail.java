@@ -3,7 +3,7 @@
 // (powered by Fernflower decompiler)
 //
 
-package at.meeximum.activitymoverfx.models.json.garmin;
+package cn.lujiawu.garmin2suunto.garmin.api;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;

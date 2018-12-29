@@ -1,11 +1,10 @@
 package cn.lujiawu.garmin2suunto;
 
 import at.meeximum.activitymoverfx.converter.GarminConverter;
-import at.meeximum.activitymoverfx.models.gson.garmin.Activity;
-import at.meeximum.activitymoverfx.models.gson.garmin.Splits;
-import at.meeximum.activitymoverfx.models.json.garmin.ActivityDetail;
-import at.meeximum.activitymoverfx.models.json.garmin.ActivityItem;
-import at.meeximum.activitymoverfx.models.json.garmin.GActivityDetails;
+import cn.lujiawu.garmin2suunto.garmin.api.Activity;
+import cn.lujiawu.garmin2suunto.garmin.api.ActivitySplits;
+import cn.lujiawu.garmin2suunto.garmin.api.ActivityDetail;
+import cn.lujiawu.garmin2suunto.garmin.api.ActivityItem;
 import at.meeximum.activitymoverfx.models.json.suunto.Move;
 import at.meeximum.activitymoverfx.models.json.suunto.MoveItem;
 import cn.lujiawu.garmin2suunto.garmin.GarminConfiguration;
@@ -69,7 +68,7 @@ public class SyncService {
 
         Observable<Activity> activityObservable = garminConnectApi.garminActivity(activityId);
         Observable<ActivityDetail> detailsObservable = garminConnectApi.garminActivityDetails(activityId);
-        Observable<Splits> splitsObservable = garminConnectApi.garminActivitySplits(activityId);
+        Observable<ActivitySplits> splitsObservable = garminConnectApi.garminActivitySplits(activityId);
 
         return Observable.zip(activityObservable, detailsObservable, splitsObservable,
                 (a, b, c) -> GarminConverter.convert(a, c, b));

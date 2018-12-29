@@ -1,4 +1,4 @@
-package at.meeximum.activitymoverfx.models.json.garmin;
+package cn.lujiawu.garmin2suunto.garmin.api;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
@@ -24,9 +24,13 @@ public class ActivityItem implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
-        if (!(o instanceof ActivityItem)) return false;
+        if (!(o instanceof ActivityItem)) {
+            return false;
+        }
 
         ActivityItem item = (ActivityItem) o;
 

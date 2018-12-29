@@ -1,10 +1,6 @@
 package cn.lujiawu.garmin2suunto.garmin.api;
 
 import at.meeximum.activitymoverfx.converter.GarminConverter;
-import at.meeximum.activitymoverfx.models.gson.garmin.Activity;
-import at.meeximum.activitymoverfx.models.gson.garmin.Splits;
-import at.meeximum.activitymoverfx.models.json.garmin.ActivityDetail;
-import at.meeximum.activitymoverfx.models.json.garmin.GActivityDetails;
 import at.meeximum.activitymoverfx.models.json.suunto.Move;
 import cn.lujiawu.garmin2suunto.util.AutoLoginer;
 import cn.lujiawu.garmin2suunto.util.OkHttpClientManager;
@@ -68,7 +64,7 @@ public class ConnectApiTest {
 
                     Observable<Activity> activityObservable = garminConnectApi.garminActivity(activityId);
                     Observable<ActivityDetail> detailsObservable = garminConnectApi.garminActivityDetails(activityId);
-                    Observable<Splits> splitsObservable = garminConnectApi.garminActivitySplits(activityId);
+                    Observable<ActivitySplits> splitsObservable = garminConnectApi.garminActivitySplits(activityId);
 
                     Observable<ActivityWrapper> activityWrapperObservable =
                             Observable.zip(activityObservable, detailsObservable, splitsObservable,
@@ -87,7 +83,7 @@ public class ConnectApiTest {
                     System.out.println(wapper.getActivity().getSummaryDTO().getStartTimeLocal());
 
                     try {
-                        Move move = GarminConverter.convert(wapper.getActivity(),wapper.getSplits(),wapper.getDetails());
+                        Move move = GarminConverter.convert(wapper.getActivity(),wapper.getActivitySplits(),wapper.getDetails());
                         System.out.println(move);
                     } catch (Exception e) {
                         e.printStackTrace();

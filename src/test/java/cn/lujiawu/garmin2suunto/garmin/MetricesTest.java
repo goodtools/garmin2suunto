@@ -1,7 +1,6 @@
 package cn.lujiawu.garmin2suunto.garmin;
 
-import at.meeximum.activitymoverfx.models.json.garmin.ActivityDetail;
-import at.meeximum.activitymoverfx.models.json.suunto.SampleSet;
+import cn.lujiawu.garmin2suunto.garmin.api.ActivityDetail;
 import com.google.gson.Gson;
 import org.junit.Test;
 

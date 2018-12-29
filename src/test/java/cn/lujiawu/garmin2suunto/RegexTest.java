@@ -10,7 +10,7 @@ public class RegexTest {
     public void test(){
 
         Pattern compile = Pattern.compile("\\d+");
-        Matcher matcher = compile.matcher("activity_50360706.tcx");
+        Matcher matcher = compile.matcher("50360706\n\n跑步\n\nhttp://connect.garmin.cn/activity/50360706");
         matcher.find();
         String string = matcher.group();//提取匹配到的结果
         System.out.println(string);
