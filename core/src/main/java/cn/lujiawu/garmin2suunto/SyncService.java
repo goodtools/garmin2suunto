@@ -6,10 +6,7 @@ import cn.lujiawu.garmin2suunto.move.api.Move;
 import cn.lujiawu.garmin2suunto.move.api.MoveApi;
 import cn.lujiawu.garmin2suunto.move.api.MoveItem;
 import cn.lujiawu.garmin2suunto.move.api.MoveResult;
-import cn.lujiawu.garmin2suunto.util.Act2MoveConverter;
-import cn.lujiawu.garmin2suunto.util.AutoLoginer;
-import cn.lujiawu.garmin2suunto.util.OkHttpClientManager;
-import cn.lujiawu.garmin2suunto.util.RetrofitHelper;
+import cn.lujiawu.garmin2suunto.util.*;
 import org.apache.commons.lang3.StringUtils;
 import rx.Observable;
 
@@ -34,9 +31,9 @@ public class SyncService {
     }
 
     public Observable<MoveItem> getLatestMove(String email, String key) {
-        return moveApi.moves(email, key)
+        return moveApi.moves(email, key, DateUtils.getLast2WeekDate())
                 .flatMap(Observable::from)
-                .firstOrDefault(new MoveItem());
+                .lastOrDefault(new MoveItem());
     }
 
 

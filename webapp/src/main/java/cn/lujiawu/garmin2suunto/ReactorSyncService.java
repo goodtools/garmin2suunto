@@ -40,6 +40,7 @@ public class ReactorSyncService {
                     .flatMapIterable(activityItems -> {
                         emmiter.next("2.2 finish get garmin history , size is " + activityItems.size());
                         if (activityItems.isEmpty()) {
+                            emmiter.next("date is update2date");
                             emmiter.complete();
                         }
                         return activityItems;
@@ -56,9 +57,9 @@ public class ReactorSyncService {
                         emmiter.next("3.2." + " finish get garmin detail " + move.getLocalStartTime());
                         return syncService.saveMove(syncConfig.getSuuntoUserName(), syncConfig.getSuuntoUserKey(), move);
                     }).doOnNext(result -> {
-                        emmiter.next("4.1." + " save move success" + result.getSelfURI());
-                    })
-                    .doOnError( e -> {
+                emmiter.next("4.1." + " save move success" + result.getSelfURI());
+            })
+                    .doOnError(e -> {
                         emmiter.next("on error !!! " + ExceptionUtils.getMessage(e));
                         emmiter.complete();
                     })
