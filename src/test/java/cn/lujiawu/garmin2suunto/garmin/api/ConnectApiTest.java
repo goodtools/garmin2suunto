@@ -3,6 +3,7 @@ package cn.lujiawu.garmin2suunto.garmin.api;
 import at.meeximum.activitymoverfx.converter.GarminConverter;
 import at.meeximum.activitymoverfx.models.gson.garmin.Activity;
 import at.meeximum.activitymoverfx.models.gson.garmin.Splits;
+import at.meeximum.activitymoverfx.models.json.garmin.ActivityDetail;
 import at.meeximum.activitymoverfx.models.json.garmin.GActivityDetails;
 import at.meeximum.activitymoverfx.models.json.suunto.Move;
 import cn.lujiawu.garmin2suunto.util.AutoLoginer;
@@ -44,7 +45,7 @@ public class ConnectApiTest {
                 .map(activity -> {
                     String activityId = activity.getActivityId().toString();
                     Observable<Activity> activityObservable = garminConnectApi.garminActivity(activityId);
-                    Observable<GActivityDetails> detailsObservable = garminConnectApi.garminActivityDetails(activityId);
+                    Observable<ActivityDetail> detailsObservable = garminConnectApi.garminActivityDetails(activityId);
                     Observable<ActivityWrapper> activityWrapperObservable =
                             activityObservable.zipWith(detailsObservable, (act, detail) -> new ActivityWrapper(activityId, act, detail,null));
                     return activityWrapperObservable;
@@ -66,7 +67,7 @@ public class ConnectApiTest {
                     String activityId = activity.getActivityId().toString();
 
                     Observable<Activity> activityObservable = garminConnectApi.garminActivity(activityId);
-                    Observable<GActivityDetails> detailsObservable = garminConnectApi.garminActivityDetails(activityId);
+                    Observable<ActivityDetail> detailsObservable = garminConnectApi.garminActivityDetails(activityId);
                     Observable<Splits> splitsObservable = garminConnectApi.garminActivitySplits(activityId);
 
                     Observable<ActivityWrapper> activityWrapperObservable =

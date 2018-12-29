@@ -6,23 +6,24 @@
 package at.meeximum.activitymoverfx.converter;
 
 import at.meeximum.activitymoverfx.models.gson.garmin.Activity;
-import at.meeximum.activitymoverfx.models.gson.garmin.LapDTO;
 import at.meeximum.activitymoverfx.models.gson.garmin.Splits;
-import at.meeximum.activitymoverfx.models.json.garmin.GActivityDetails;
+import at.meeximum.activitymoverfx.models.json.garmin.ActivityDetail;
 import at.meeximum.activitymoverfx.models.json.suunto.Move;
 import at.meeximum.activitymoverfx.models.json.suunto.MoveMark;
 import at.meeximum.activitymoverfx.models.json.suunto.SampleSet;
 import at.meeximum.activitymoverfx.models.json.suunto.TrackPoint;
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class GarminConverter {
 
-    public static Move convert(Activity activity, Splits splits, GActivityDetails detail) {
+    public static Move convert(Activity activity, Splits splits, ActivityDetail detail) {
 
         Move move = new Move();
         Long garminActivityId = activity.getActivityId();
@@ -51,12 +52,7 @@ public class GarminConverter {
 
         move.setNotes(notes.toString());
 
-        String var8 = detail.getTimeStamp(0);
-        if (StringUtils.isBlank(var8)) {
-            var8 = activity.getSummaryDTO().getStartTimeLocal();
-        }
-
-        move.setLocalStartTime(var8);
+        move.setLocalStartTime(activity.getSummaryDTO().getStartTimeLocal());
         Double var9 = activity.getSummaryDTO().getStartLatitude();
         if (var9 != null) {
             move.setStartLatitude(var9);
@@ -67,18 +63,13 @@ public class GarminConverter {
             move.setStartLongitute(var10);
         }
 
-        Double var11 = move.getStartLatitude();
-        Double var12 = move.getStartLongitute();
         Long var13 = 9223372036854775807L;
         Long var14 = -9223372036854775808L;
-        ArrayList var15 = new ArrayList();
         ArrayList var16 = new ArrayList();
-        ArrayList var17 = new ArrayList();
         Double var18 = null;
         Double var19 = null;
         Double var20 = null;
 
-        SampleSet var24;
         Double var25;
         Double var26;
         Double var27;
@@ -89,123 +80,16 @@ public class GarminConverter {
         Double var32;
         Double var33;
         Double var34;
-        for (int var21 = 0; var21 < detail.getMetrics().size(); ++var21) {
-            String var22 = detail.getTimeStamp(var21);
-            if (detail.getTimeStampMS(var21) < var13) {
-                var13 = detail.getTimeStampMS(var21);
-            }
-
-            if (detail.getTimeStampMS(var21) > var14) {
-                var14 = detail.getTimeStampMS(var21);
-            }
-
-            try {
-                var24 = new SampleSet();
-                var24.setLocalTime(var22);
-                var25 = detail.getElevationInM(var21);
-                if (var25 != null && var25 != 0.0D) {
-                    var24.setAltitude(var25.floatValue());
-                }
-
-                var26 = detail.getBikeCadence(var21);
-                if (var26 != null && var26 != 0.0D) {
-                    var24.setBikeCadence(var26.floatValue());
-                }
-
-                var27 = detail.getDistanceInKM(var21);
-                if (var27 != null && var27 != 0.0D) {
-                    var24.setDistance((int) (var27 * 1000.0D));
-                }
-
-                var28 = detail.getHeartRate(var21);
-                if (var18 == null || var28 < var18) {
-                    var18 = var28;
-                }
-
-                if (var28 != null && var28 != 0.0D) {
-                    var24.setHeartRate(var28.intValue());
-                }
-
-                var29 = detail.getPower(var21);
-                if (var29 != null && var29 != 0.0D) {
-                    var24.setPower(var29.intValue());
-                }
-
-                var30 = detail.getRunCadence(var21);
-                if (var30 != null && var30 != 0.0D) {
-                    var24.setBikeCadence(var30.floatValue());
-                }
-
-                var31 = detail.getSpeedInMPS(var21);
-                if (var31 != null && var31 != 0.0D) {
-                    var24.setSpeed(var31.floatValue());
-                }
-
-                var32 = detail.getAirTemperature(var21);
-                if (var19 == null || var32 < var19) {
-                    var19 = var32;
-                }
-
-                if (var20 == null || var32 > var20) {
-                    var20 = var32;
-                }
-
-                if (var32 != null && var32 != 0.0D) {
-                    var24.setTemperature(var32.floatValue());
-                }
-
-                var15.add(var24);
-                TrackPoint var23 = new TrackPoint();
-                var23.setLocalTime(detail.getTimeStamp(var21));
-                var23.setAltitude(var24.getAltitude());
-                var33 = detail.getLongitude(var21);
-                if (var33 != null && var33 != 0.0D) {
-                    var23.setLongitude(var33);
-                    var12 = var33;
-                } else {
-                    var23.setLongitude(var12);
-                }
-
-                var34 = detail.getLatitude(var21);
-                if (var34 != null && var34 != 0.0D) {
-                    var23.setLatitude(var34);
-                    var11 = var34;
-                } else {
-                    var23.setLatitude(var11);
-                }
-
-                if (var23.getLatitude() != null && var23.getLongitude() != null) {
-                    var16.add(var23);
-                }
-            } catch (Exception var42) {
-                var42.printStackTrace();
-            }
-        }
-
         Collections.sort(var16, new Comparator<TrackPoint>() {
             @Override
             public int compare(TrackPoint var1, TrackPoint var2) {
                 return var1.getLocalTime().compareTo(var2.getLocalTime());
             }
         });
-        Collections.sort(var15, new Comparator<SampleSet>() {
-            @Override
-            public int compare(SampleSet var1, SampleSet var2) {
-                return var1.getLocalTime().compareTo(var2.getLocalTime());
-            }
-        });
-        Iterator var43 = splits.getLapDTOs().iterator();
 
+
+        //TODO
         Double var49;
-        while (var43.hasNext()) {
-            LapDTO var45 = (LapDTO) var43.next();
-            MoveMark var47 = new MoveMark();
-            var49 = var45.getDuration();
-            if (var49 != null) {
-                var47.setSplitTimeFromPrevious(var49);
-                var17.add(var47);
-            }
-        }
 
         Double var44 = activity.getSummaryDTO().getElevationGain();
         if (var44 != null) {
@@ -224,7 +108,6 @@ public class GarminConverter {
             move.setDistance(0);
         }
 
-        var24 = null;
 
         try {
             var49 = activity.getSummaryDTO().getMovingDuration();
@@ -332,17 +215,10 @@ public class GarminConverter {
             move.setAvgRunningCadence(var40.floatValue());
         }
 
-        if (var17.size() > 0) {
-            move.setMarks(var17);
-        }
 
-        if (var15.size() > 0) {
-            move.setSamples(var15);
-        }
-
-        if (var16.size() > 0) {
-            move.setTrack(var16);
-        }
+        move.setMarks(convertMoveMarks(splits));
+        move.setSamples(convertSampleSet(detail));
+        move.setTrack(convertTrackPoint(detail));
 
         if (move.getAvgTemp() != null && move.getMinTemp() != null && move.getAvgTemp() < move.getMinTemp()) {
             move.setAvgTemp(move.getMinTemp());
@@ -351,5 +227,53 @@ public class GarminConverter {
         return move;
     }
 
+    private static List<MoveMark> convertMoveMarks(Splits splits) {
+        return splits.getLapDTOs().stream().map(lapDTO -> {
+            MoveMark moveMark = new MoveMark();
+            moveMark.setType(0);
+            moveMark.setSplitTimeFromPrevious(lapDTO.getDuration());
+            moveMark.setDistanceFromPrevious(lapDTO.getDistance().intValue());
+            return moveMark;
+        }).collect(Collectors.toList());
+    }
+
+    private static List<SampleSet> convertSampleSet(ActivityDetail detail) {
+        if (null == detail.getActivityDetailMetrics()) {
+            return Collections.EMPTY_LIST;
+        }
+        ActivityDetail.MetricIndex index = new ActivityDetail.MetricIndex(detail.getMetricDescriptors());
+        return detail.getActivityDetailMetrics()
+                .stream()
+                .map( m -> GarminConverter.convert(m,index))
+                .collect(Collectors.toList());
+    }
+
+    private static List<TrackPoint> convertTrackPoint(ActivityDetail detail) {
+        if (null == detail.getGeoPolylineDTO() || null == detail.getGeoPolylineDTO().getPolyline()) {
+            return Collections.EMPTY_LIST;
+        }
+        return detail.getGeoPolylineDTO().getPolyline().stream().map(GarminConverter::convert).collect(Collectors.toList());
+    }
+
+    private static SampleSet convert(ActivityDetail.ActivityDetailMetric activityDetailMetric, ActivityDetail.MetricIndex index) {
+        SampleSet sampleSet = new SampleSet();
+        sampleSet.setBikeCadence(activityDetailMetric.getCadence(index));
+        sampleSet.setDistance(activityDetailMetric.getDistance(index));
+        sampleSet.setHeartRate(activityDetailMetric.getHeartRate(index));
+        sampleSet.setLocalTime(activityDetailMetric.getLocalTime(index));
+        sampleSet.setRunningCadence(activityDetailMetric.getRunningCadence(index));
+        sampleSet.setSpeed(activityDetailMetric.getSpeed(index));
+        return sampleSet;
+    }
+
+    private static TrackPoint convert(ActivityDetail.Track track) {
+        TrackPoint tp = new TrackPoint();
+        tp.setAltitude(track.getAltitude());
+        tp.setLatitude(track.getLat());
+        tp.setLocalTime(track.getTimeLocale());
+        tp.setLongitude(track.getLon());
+        tp.setSpeed(track.getSpeed());
+        return tp;
+    }
 
 }

@@ -2,6 +2,7 @@ package cn.lujiawu.garmin2suunto;
 
 import at.meeximum.activitymoverfx.models.json.garmin.ActivityItem;
 import cn.lujiawu.garmin2suunto.move.api.MoveApi;
+import com.google.gson.Gson;
 import org.junit.Test;
 
 public class SyncServiceTest {
@@ -18,13 +19,15 @@ public class SyncServiceTest {
                 });
     }
 
+    String activityIdOutdoor = "50453091";
+    String activityIdIndoor = "50360706";
     @Test
-    public void testGetMove() {
+    public void testGetOutdoorMove() {
         SyncService syncService = new SyncService();
         syncService.init();
-        syncService.getMove("50360706")
+        syncService.getMove(activityIdIndoor)
                 .subscribe(move -> {
-                    System.out.println(move);
+                    System.out.println(new Gson().toJson(move));
                 });
 
     }
@@ -43,7 +46,7 @@ public class SyncServiceTest {
 //                });
 
 
-        syncService.getMove("50327639")
+        syncService.getMove(activityIdOutdoor)
                 .flatMap(move -> {
                     return syncService.saveMove(email, key, move);
                 })
@@ -53,7 +56,6 @@ public class SyncServiceTest {
                     e.printStackTrace();
                 });
 
-        System.out.println(123);
 //        syncService.getLatestMove(email, key)
 //                .subscribe(move -> {
 //                    System.out.println(move);

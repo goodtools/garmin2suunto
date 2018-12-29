@@ -2,8 +2,8 @@ package cn.lujiawu.garmin2suunto.garmin.api;
 
 import at.meeximum.activitymoverfx.models.gson.garmin.Activity;
 import at.meeximum.activitymoverfx.models.gson.garmin.Splits;
+import at.meeximum.activitymoverfx.models.json.garmin.ActivityDetail;
 import at.meeximum.activitymoverfx.models.json.garmin.ActivityItem;
-import at.meeximum.activitymoverfx.models.json.garmin.GActivityDetails;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -17,7 +17,7 @@ public interface ConnectApi {
     Observable<Activity> garminActivity(@Path("id") String id);
 
     @GET("/modern/proxy/activity-service/activity/{id}/details")
-    Observable<GActivityDetails> garminActivityDetails(@Path("id") String id);
+    Observable<ActivityDetail> garminActivityDetails(@Path("id") String id);
 
     @GET("/modern/proxy/activity-service/activity/{id}/splits")
     Observable<Splits> garminActivitySplits(@Path("id") String id);

@@ -3,6 +3,7 @@ package cn.lujiawu.garmin2suunto;
 import at.meeximum.activitymoverfx.converter.GarminConverter;
 import at.meeximum.activitymoverfx.models.gson.garmin.Activity;
 import at.meeximum.activitymoverfx.models.gson.garmin.Splits;
+import at.meeximum.activitymoverfx.models.json.garmin.ActivityDetail;
 import at.meeximum.activitymoverfx.models.json.garmin.ActivityItem;
 import at.meeximum.activitymoverfx.models.json.garmin.GActivityDetails;
 import at.meeximum.activitymoverfx.models.json.suunto.Move;
@@ -67,7 +68,7 @@ public class SyncService {
     public Observable<Move> getMove(String activityId) {
 
         Observable<Activity> activityObservable = garminConnectApi.garminActivity(activityId);
-        Observable<GActivityDetails> detailsObservable = garminConnectApi.garminActivityDetails(activityId);
+        Observable<ActivityDetail> detailsObservable = garminConnectApi.garminActivityDetails(activityId);
         Observable<Splits> splitsObservable = garminConnectApi.garminActivitySplits(activityId);
 
         return Observable.zip(activityObservable, detailsObservable, splitsObservable,

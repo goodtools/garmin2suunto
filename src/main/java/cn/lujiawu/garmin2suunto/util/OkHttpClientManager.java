@@ -71,6 +71,11 @@ public class OkHttpClientManager {
 //            System.out.println(" >>>> intercepter " );
 //            System.out.println(response);
 
+            if (response.code() == 400){
+                System.err.println(response.headers());
+                System.err.println(response.body().string());
+            }
+
             if (response.code() == 403 && null != OkHttpClientManager.autoLogin) {
 
                 System.err.println(response);
