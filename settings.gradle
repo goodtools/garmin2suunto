@@ -1,4 +1,5 @@
 rootProject.name = 'garmin2suunto'
 
-include 'webapp'
+//include 'webapp'
 include 'core'
+include 'app'
