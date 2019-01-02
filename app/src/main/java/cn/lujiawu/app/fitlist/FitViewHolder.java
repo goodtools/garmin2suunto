@@ -1,4 +1,4 @@
-package cn.lujiawu.app;
+package cn.lujiawu.app.fitlist;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;

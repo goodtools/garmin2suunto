@@ -1,37 +1,43 @@
 package cn.lujiawu.app;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
+import cn.lujiawu.app.fitlist.FitListFragment;
 import cn.lujiawu.app.settings.SettingFragment;
 
 public class MainActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        loadFragment(1);
+        loadFragment(FitListFragment.class);
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        //force to enter settings
+//        loadFragment(SettingFragment.class);
+//        return false;
+        return super.onMenuOpened(featureId, menu);
     }
 
     @Override
@@ -43,42 +49,71 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            loadFragment(SettingFragment.class);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        return super.onContextItemSelected(item);
+
+    private void loadFragment(Class fragmentClazz) {
+        String fragmentTag = fragmentClazz.getSimpleName();
+        Fragment showFragment = getSupportFragmentManager().findFragmentByTag(fragmentTag);
+        boolean isExist = true;
+        if (showFragment == null) {
+            isExist = false;
+            showFragment = createFragment(fragmentClazz);
+        }
+        if (showFragment == null) {
+            throw new RuntimeException("fragment not exist " + fragmentClazz.getName());
+        }
+        if (showFragment.isVisible()) {
+            return;
+        }
+
+        Fragment visibleFragment = getVisibleFragment();
+        if (isExist) {
+            showAndHideFragment(showFragment, visibleFragment, fragmentTag);
+        } else {
+            addAndHideFragment(showFragment, visibleFragment, fragmentTag);
+        }
+
     }
 
-    private void loadFragment(int itemId) {
-
-//        Fragment fitListFragment = new FitListFragment();
-//        Fragment fragment = new FitListFragment();
-        Fragment fragment = new SettingFragment();
-        addAndHideFragment(fragment,null,fragment.getClass().getSimpleName());
-
-
-//        if (isExist) {
-//            showAndHideFragment(showFragment, visibleFragment);
-//        } else {
-//            addAndHideFragment(showFragment, visibleFragment, fragmentTag);
-//        }
+    private Fragment createFragment(Class fragmentClazz) {
+        try {
+            return (Fragment) fragmentClazz.newInstance();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    private void showAndHideFragment(@NonNull Fragment showFragment, @Nullable Fragment hideFragment) {
+    private Fragment getVisibleFragment() {
+        @SuppressLint("RestrictedApi")
+        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+        if (fragmentList != null) {
+            for (Fragment fragment : fragmentList) {
+                if (fragment != null && fragment.isVisible()) {
+                    return fragment;
+                }
+            }
+        }
+        return null;
+    }
+
+    private void showAndHideFragment(@NonNull Fragment showFragment, @Nullable Fragment hideFragment, String tagName) {
         if (hideFragment == null) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .show(showFragment)
+                    .addToBackStack(tagName)
                     .commit();
         } else {
             getSupportFragmentManager()
                     .beginTransaction()
                     .show(showFragment)
+                    .addToBackStack(tagName)
                     .hide(hideFragment)
                     .commit();
         }
@@ -91,11 +126,13 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.frame_layout_content, showFragment, addTag)
+//                    .addToBackStack(addTag)
                     .commit();
         } else {
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.frame_layout_content, showFragment, addTag)
+                    .addToBackStack(addTag)
                     .hide(hideFragment)
                     .commit();
         }
