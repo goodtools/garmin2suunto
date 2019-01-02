@@ -1,7 +1,17 @@
 package cn.lujiawu.garmin2suunto;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import cn.lujiawu.garmin2suunto.garmin.GarminConfiguration;
-import cn.lujiawu.garmin2suunto.garmin.api.*;
+import cn.lujiawu.garmin2suunto.garmin.api.Activity;
+import cn.lujiawu.garmin2suunto.garmin.api.ActivityDetail;
+import cn.lujiawu.garmin2suunto.garmin.api.ActivityItem;
+import cn.lujiawu.garmin2suunto.garmin.api.ActivitySplits;
+import cn.lujiawu.garmin2suunto.garmin.api.ConnectApi;
 import cn.lujiawu.garmin2suunto.move.api.Move;
 import cn.lujiawu.garmin2suunto.move.api.MoveApi;
 import cn.lujiawu.garmin2suunto.move.api.MoveItem;
@@ -9,12 +19,8 @@ import cn.lujiawu.garmin2suunto.move.api.MoveResult;
 import cn.lujiawu.garmin2suunto.util.Act2MoveConverter;
 import cn.lujiawu.garmin2suunto.util.DateUtils;
 import cn.lujiawu.garmin2suunto.util.RetrofitHelper;
-import org.apache.commons.lang3.StringUtils;
-import rx.Observable;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public class SyncService {
 
@@ -29,18 +35,18 @@ public class SyncService {
         moveApi = RetrofitHelper.createApi(MoveApi.HOST, MoveApi.class);
     }
 
-    public Observable<MoveItem> getLatestMove(String email, String key) {
+    public Single<MoveItem> getLatestMove(String email, String key) {
         return moveApi.moves(email, key, DateUtils.getLast2WeekDate())
-                .flatMap(Observable::from)
-                .lastOrDefault(new MoveItem());
+                .flatMap(list -> Observable.fromArray(list.toArray(new MoveItem[0])))
+                .last(new MoveItem());
     }
 
 
-    public Observable<List<ActivityItem>> getActivityItems(String id, String startDate) {
+    public Single<List<ActivityItem>> getActivityItems(String id, String startDate) {
 
         if (StringUtils.isAnyEmpty(id, startDate)) {
             return garminConnectApi.latest20()
-                    .flatMap(activities -> Observable.from(activities))
+                    .flatMap(activities -> Observable.fromArray(activities.toArray(new ActivityItem[0])))
                     .toList()
                     .map(list -> {
                         Collections.reverse(list);
@@ -49,7 +55,7 @@ public class SyncService {
         }
 
         return garminConnectApi.search(startDate)
-                .flatMap(activities -> Observable.from(activities))
+                .flatMap(activities -> Observable.fromArray(activities.toArray(new ActivityItem[0])))
                 .toList()
                 .map(list -> {
                     Collections.reverse(list);
@@ -71,14 +77,32 @@ public class SyncService {
     }
 
 
-    public Observable<Move> getMoveFromGarminAct(String activityId) {
+    public Single<List<ActivityItem>> getActivityPaged(int start, int limit) {
+
+        return garminConnectApi.search(limit, start)
+                .flatMap(activities -> Observable.fromArray(activities.toArray(new ActivityItem[0])))
+                .toList()
+                .map(list -> {
+                    List<ActivityItem> activityItems = new ArrayList<>(list.size());
+                    for (ActivityItem item : list) {
+                        if (StringUtils.endsWithAny(item.getActivityType().getTypeKey(), "running", "cycling")) {
+                            activityItems.add(item);
+                        }
+                    }
+                    return activityItems;
+                });
+
+    }
+
+
+    public Single<Move> getMoveFromGarminAct(String activityId) {
 
         Observable<Activity> activityObservable = garminConnectApi.garminActivity(activityId);
         Observable<ActivityDetail> detailsObservable = garminConnectApi.garminActivityDetails(activityId);
         Observable<ActivitySplits> splitsObservable = garminConnectApi.garminActivitySplits(activityId);
 
         return Observable.zip(activityObservable, detailsObservable, splitsObservable,
-                (a, b, c) -> Act2MoveConverter.convert(a, c, b));
+                (a, b, c) -> Act2MoveConverter.convert(a, c, b)).singleOrError();
 
 
     }

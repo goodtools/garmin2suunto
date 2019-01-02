@@ -1,12 +1,14 @@
 package cn.lujiawu.garmin2suunto;
 
+import com.google.gson.Gson;
+
+import org.junit.Test;
+
 import cn.lujiawu.garmin2suunto.garmin.AutoLoginInterceptor;
 import cn.lujiawu.garmin2suunto.garmin.SimpleCookieJar;
 import cn.lujiawu.garmin2suunto.garmin.api.ActivityItem;
 import cn.lujiawu.garmin2suunto.util.AutoLoginer;
 import cn.lujiawu.garmin2suunto.util.OkHttpClientManager;
-import com.google.gson.Gson;
-import org.junit.Test;
 
 public class SyncServiceTest {
 
@@ -56,9 +58,6 @@ public class SyncServiceTest {
 
 
         syncService.getMoveFromGarminAct(activityIdOutdoor)
-                .flatMap(move -> {
-                    return syncService.saveMove(email, key, move);
-                })
                 .subscribe(result -> {
                     System.out.println(result);
                 }, e -> {

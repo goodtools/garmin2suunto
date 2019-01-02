@@ -16,8 +16,9 @@ dependencies {
     compileOnly('org.projectlombok:lombok:+')
     compile('com.google.code.gson:gson:2.8.5')
     compile('com.squareup.retrofit2:retrofit:2.5.0')
-    compile('com.squareup.retrofit2:adapter-rxjava:2.5.0')
+    compile('com.squareup.retrofit2:adapter-rxjava2:2.5.0')
     compile('com.squareup.retrofit2:converter-gson:2.5.0')
     compile('org.apache.commons:commons-lang3:3.8.1')
     testCompile("junit:junit:4.12")
+//    annotationProcessor "org.projectlombok:lombok:1.16.18"
 }

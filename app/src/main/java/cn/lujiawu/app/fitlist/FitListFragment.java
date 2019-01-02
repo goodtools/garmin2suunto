@@ -9,19 +9,22 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.Toast;
 
 import cn.lujiawu.app.R;
+import cn.lujiawu.garmin2suunto.SyncService;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class FitListFragment extends Fragment {
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
+    SyncService mSyncService;
 
     @Nullable
     @Override
@@ -31,6 +34,9 @@ public class FitListFragment extends Fragment {
 
         Toolbar toolbar = (Toolbar) fragmentView.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+        mSyncService = new SyncService();
+        mSyncService.init();
 
         return fragmentView;
 
@@ -47,7 +53,6 @@ public class FitListFragment extends Fragment {
                 startup();
             }
         });
-
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -65,15 +70,18 @@ public class FitListFragment extends Fragment {
 
     private void startup() {
 
-        List list = new ArrayList();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        list.add(4);
-        list.add(5);
+        mSyncService
+                .getActivityPaged(0, 20)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    mRecyclerView.setAdapter(new FitRecyclerViewAdapter(list));
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }, e -> {
+                    Log.e("net", e.getMessage(), e);
+                    Toast.makeText(mSwipeRefreshLayout.getContext(), "网络请求失败", Toast.LENGTH_LONG).show();
+                });
 
-        mRecyclerView.setAdapter(new FitRecyclerViewAdapter(list));
-        mSwipeRefreshLayout.setRefreshing(false);
     }
 
 
