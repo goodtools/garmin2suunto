@@ -30,3 +30,4 @@ build
 config.properties
 webapp/src/main/resources/application.properties
 scp-bwg.sh
+*.keystore
