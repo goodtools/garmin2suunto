@@ -41,6 +41,8 @@ public class Garmin2suuntoApplication implements InitializingBean {
 
         OkHttpClientManager.init(logging,autoLoginInterceptor,simpleCookieJar);
 
+        ApiManager.init(syncConfig.getSuuntoUserName(),syncConfig.getSuuntoUserKey());
+
     }
 
 }

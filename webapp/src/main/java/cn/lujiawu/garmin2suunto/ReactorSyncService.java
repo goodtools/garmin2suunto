@@ -1,7 +1,6 @@
 package cn.lujiawu.garmin2suunto;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -10,8 +9,7 @@ import reactor.core.publisher.FluxSink;
 @Service
 public class ReactorSyncService {
 
-    @Autowired
-    protected SyncService syncService;
+    protected SyncService syncService = new SyncService();
 
     @Autowired
     protected SyncConfig syncConfig;
@@ -22,7 +20,7 @@ public class ReactorSyncService {
 
             emmiter.next("1.1 start get lastest move ");
             //1. 获取记录
-            syncService.getLatestMove(syncConfig.getSuuntoUserName(), syncConfig.getSuuntoUserKey())
+            syncService.getLatestMove()
                     .flatMap(last -> {
                         emmiter.next("1.2 finish get lastest move ");
                         if (null == last.getMoveId()) {
@@ -35,6 +33,7 @@ public class ReactorSyncService {
                         //2. 获取garmin历史记录
                         return syncService.getActivityItems(last.getGarminActivityId(), last.getStartDate());
                     })
+                    .toObservable()
                     //3. 对每条记录进行处理 foreach
                     .flatMapIterable(activityItems -> {
                         emmiter.next("2.2 finish get garmin history , size is " + activityItems.size());
@@ -44,7 +43,7 @@ public class ReactorSyncService {
                         }
                         return activityItems;
                     })
-                    .flatMap(activityItem -> {
+                    .flatMapSingle(activityItem -> {
                         if (null == activityItem) {
                             emmiter.next("3.1 activity item is null, complete ");
                             emmiter.complete();
@@ -52,9 +51,9 @@ public class ReactorSyncService {
                         emmiter.next("3.1." + activityItem.getActivityId() + " start get garmin move detail ");
                         return syncService.getMoveFromGarminAct(activityItem.getActivityId());
                     })
-                    .flatMap(move -> {
+                    .flatMapSingle(move -> {
                         emmiter.next("3.2." + " finish get garmin detail " + move.getLocalStartTime());
-                        return syncService.saveMove(syncConfig.getSuuntoUserName(), syncConfig.getSuuntoUserKey(), move);
+                        return syncService.saveMove(move);
                     }).doOnNext(result -> {
                 emmiter.next("4.1." + " save move success" + result.getSelfURI());
             })
@@ -62,7 +61,7 @@ public class ReactorSyncService {
                         emmiter.next("on error !!! " + ExceptionUtils.getMessage(e));
                         emmiter.complete();
                     })
-                    .doOnCompleted(() -> {
+                    .doOnComplete(() -> {
                         emmiter.next("on complete!!");
                         emmiter.complete();
                     })
@@ -71,19 +70,6 @@ public class ReactorSyncService {
         }, FluxSink.OverflowStrategy.DROP);
 
         return fluxs;
-
-    }
-
-    @Service
-    public static class SpringSyncService extends SyncService implements InitializingBean {
-
-        @Override
-        public void afterPropertiesSet() throws Exception {
-
-            super.init();
-
-        }
-
 
     }
 

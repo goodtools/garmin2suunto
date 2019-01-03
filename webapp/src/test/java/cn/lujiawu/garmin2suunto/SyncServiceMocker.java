@@ -4,8 +4,7 @@ import cn.lujiawu.garmin2suunto.garmin.api.ActivityItem;
 import cn.lujiawu.garmin2suunto.move.api.Move;
 import cn.lujiawu.garmin2suunto.move.api.MoveItem;
 import cn.lujiawu.garmin2suunto.move.api.MoveResult;
-import org.apache.commons.lang3.StringUtils;
-import rx.Observable;
+import io.reactivex.Single;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +13,9 @@ import java.util.concurrent.TimeUnit;
 public class SyncServiceMocker extends SyncService {
 
     @Override
-    public Observable<MoveItem> getLatestMove(String email, String key) {
-        return Observable.fromCallable(() -> {
+    public Single<MoveItem> getLatestMove() {
+        return Single.fromCallable(() -> {
             sleep(100);
-            if (StringUtils.isEmpty(email)){
-                return new MoveItem();
-            }
             MoveItem moveItem = new MoveItem();
             moveItem.setMoveId(1);
             return moveItem;
@@ -27,8 +23,8 @@ public class SyncServiceMocker extends SyncService {
     }
 
     @Override
-    public Observable<List<ActivityItem>> getActivityItems(String id, String startDate) {
-        return Observable.fromCallable(() -> {
+    public Single<List<ActivityItem>> getActivityItems(String id, String startDate) {
+        return Single.fromCallable(() -> {
             sleep(300);
             List<ActivityItem> list = new ArrayList<>();
             list.add(new ActivityItem());
@@ -39,16 +35,16 @@ public class SyncServiceMocker extends SyncService {
     }
 
     @Override
-    public Observable<Move> getMoveFromGarminAct(String activityId) {
-        return Observable.fromCallable(() -> {
+    public Single<Move> getMoveFromGarminAct(String activityId) {
+        return Single.fromCallable(() -> {
             sleep(100);
             return new Move();
         });
     }
 
     @Override
-    public Observable<MoveResult> saveMove(String email, String key, Move move) {
-        return Observable.fromCallable(() -> {
+    public Single<MoveResult> saveMove(Move move) {
+        return Single.fromCallable(() -> {
             sleep(200);
             return new MoveResult();
         });
