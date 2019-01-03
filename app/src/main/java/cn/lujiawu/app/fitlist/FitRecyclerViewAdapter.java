@@ -17,6 +17,10 @@ public class FitRecyclerViewAdapter
     private static final int TYPE_ITEM = 0;  //普通Item View
     private static final int TYPE_FOOTER = 1;  //顶部FootView
 
+    private boolean displayLoadMore() {
+        return list.size() > 10;
+    }
+
     private List<FitVO> list;
 
     public FitRecyclerViewAdapter(List<FitVO> list) {
@@ -46,7 +50,7 @@ public class FitRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(@NonNull FitViewHolder holder, int position) {
-        if (getItemViewType(position) == TYPE_FOOTER){
+        if (getItemViewType(position) == TYPE_FOOTER) {
             return;
         }
         FitVO fitVO = list.get(position);
@@ -55,17 +59,18 @@ public class FitRecyclerViewAdapter
 
     @Override
     public int getItemCount() {
-        return list.size() + 1;
+        if (displayLoadMore()) {
+            return list.size() + 1;
+        }
+        return list.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        // 最后一个item设置为footerView
-        if (position + 1 == getItemCount()) {
+        if (displayLoadMore() && position + 1 == getItemCount()) {
             return TYPE_FOOTER;
-        } else {
-            return TYPE_ITEM;
         }
+        return TYPE_ITEM;
     }
 
     public void resetDate(List<FitVO> FitVOs) {

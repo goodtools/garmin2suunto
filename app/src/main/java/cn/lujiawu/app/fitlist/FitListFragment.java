@@ -77,6 +77,7 @@ public class FitListFragment extends Fragment {
 
     private void startup() {
         mPage = 0;
+        mSwipeRefreshLayout.setRefreshing(true);
         mFitListService.getActivityPaged(mPage, limit)
                 .subscribeOn(Schedulers.io())
                 .map(FitConverter::convert)
