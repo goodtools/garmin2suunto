@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import cn.lujiawu.garmin2suunto.SyncInitializer;
+
 public class SettingManager {
 
     private static SettingVO settingVO;
@@ -23,6 +25,9 @@ public class SettingManager {
     }
 
     public static boolean save(SettingVO setting) {
+
+        SyncInitializer.update(setting.suuntoUserName, setting.suuntoUserKey);
+
         settingVO = setting;
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putString("garminUserName", setting.garminUserName);

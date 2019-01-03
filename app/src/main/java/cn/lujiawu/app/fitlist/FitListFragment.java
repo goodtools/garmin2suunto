@@ -1,6 +1,7 @@
 package cn.lujiawu.app.fitlist;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,15 +19,18 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cn.lujiawu.app.R;
-import cn.lujiawu.garmin2suunto.SyncService;
+import cn.lujiawu.garmin2suunto.fitlist.FitListService;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class FitListFragment extends Fragment {
 
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    RecyclerView mRecyclerView;
-    SyncService mSyncService;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private RecyclerView mRecyclerView;
+    private FitRecyclerViewAdapter mFitRecyclerViewAdapter;
+    private FitListService mFitListService;
+    private int mPage = 0;
+    private int limit = 20;
 
     @Nullable
     @Override
@@ -36,9 +40,6 @@ public class FitListFragment extends Fragment {
 
         Toolbar toolbar = (Toolbar) fragmentView.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-
-        mSyncService = new SyncService();
-        mSyncService.init();
 
         return fragmentView;
 
@@ -66,26 +67,45 @@ public class FitListFragment extends Fragment {
 //        mRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         // 设置动画
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mFitRecyclerViewAdapter = new FitRecyclerViewAdapter(new ArrayList());
+        mRecyclerView.setAdapter(mFitRecyclerViewAdapter);
+
+        mFitListService = new FitListService();
 
         startup();
     }
 
     private void startup() {
-
-        mSyncService.getActivityPaged(0, 20)
+        mPage = 0;
+        mFitListService.getActivityPaged(mPage, limit)
                 .subscribeOn(Schedulers.io())
+                .map(FitConverter::convert)
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
-                    mRecyclerView.setAdapter(new FitRecyclerViewAdapter(list));
+                    mFitRecyclerViewAdapter.resetDate(list);
                     mSwipeRefreshLayout.setRefreshing(false);
-                }, e -> {
-                    Log.e("net", e.getMessage(), e);
-                    mRecyclerView.setAdapter(new FitRecyclerViewAdapter(new ArrayList()));
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    Toast.makeText(mSwipeRefreshLayout.getContext(), "网络请求失败", Toast.LENGTH_LONG).show();
-                });
+                }, this::handleException);
 
     }
 
+    private void loadNextPage() {
+        mFitListService.getActivityPaged(++mPage, limit)
+                .subscribeOn(Schedulers.io())
+                .map(FitConverter::convert)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    mFitRecyclerViewAdapter.appendDate(list);
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }, this::handleException);
+    }
+
+    @NonNull
+    private void handleException(Throwable e) {
+        Log.e("net", e.getMessage(), e);
+        mSwipeRefreshLayout.setRefreshing(false);
+        Toast.makeText(mSwipeRefreshLayout.getContext(), "网络请求失败 " + e.getMessage(), Toast.LENGTH_LONG).show();
+    }
 
 }

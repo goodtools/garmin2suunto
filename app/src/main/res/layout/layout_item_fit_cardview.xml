@@ -24,21 +24,19 @@
             android:paddingTop="12dp">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/fit_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="2018-12-12 24:24 跑步"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/syncstatus"
+                android:id="@+id/fit_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textAlignment="center"
-                android:text="ok"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -55,10 +53,9 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/duration"
+                    android:id="@+id/fit_duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10/15"
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
@@ -77,10 +74,9 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/distance"
+                    android:id="@+id/fit_distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="140/170"
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
@@ -99,10 +95,9 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/calories"
+                    android:id="@+id/fit_calories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="180/200"
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
@@ -129,10 +124,9 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/speed"
+                    android:id="@+id/fit_speed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10/15"
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
@@ -151,10 +145,9 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/hr"
+                    android:id="@+id/fit_hr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="140/170"
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
@@ -173,10 +166,9 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/cadence"
+                    android:id="@+id/fit_cadence"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="180/200"
                     android:textAlignment="center"
                     android:textSize="16sp" />
 

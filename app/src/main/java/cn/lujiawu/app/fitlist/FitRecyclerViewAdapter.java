@@ -6,48 +6,77 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.lujiawu.app.R;
 
 public class FitRecyclerViewAdapter
-            extends RecyclerView.Adapter<FitViewHolder>{
+        extends RecyclerView.Adapter<FitViewHolder> {
 
-        private List list;
+    private static final int TYPE_ITEM = 0;  //普通Item View
+    private static final int TYPE_FOOTER = 1;  //顶部FootView
 
-        public FitRecyclerViewAdapter(List list) {
-                this.list = list;
+    private List<FitVO> list;
+
+    public FitRecyclerViewAdapter(List<FitVO> list) {
+        this.list = list;
+    }
+
+    public FitRecyclerViewAdapter() {
+        this.list = new ArrayList<>();
+    }
+
+    @NonNull
+    @Override
+    public FitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        if (viewType == TYPE_FOOTER) {
+            View foot_view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_fit_load_more, parent, false);
+            //这边可以做一些属性设置，甚至事件监听绑定
+            //view.setBackgroundColor(Color.RED);
+            FitViewHolder.FootViewHolder footViewHolder = new FitViewHolder.FootViewHolder(foot_view);
+            return footViewHolder;
         }
 
-        @NonNull
-        @Override
-        public FitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.layout_item_fit_cardview, parent, false);
-                return new FitViewHolder(view);
-        }
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.layout_item_fit_cardview, parent, false);
+        return new FitViewHolder(view);
+    }
 
-        @Override
-        public void onBindViewHolder(@NonNull FitViewHolder holder, int position) {
-//                holder.mItem = mValues.get(position);
-//                holder.mTitleView.setText(holder.mItem.get(&quot;title&quot;));
-//                holder.mSubTitleView.setText(holder.mItem.get(&quot;subtitle&quot;));
-//                holder.mLogoView.setImageResource(Integer.parseInt(holder.mItem.get(&quot;image&quot;)));
-//
-//                holder.mView.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                                if (mPreviousHolder != null &amp;&amp; mPreviousHolder != holder)
-//                                mPreviousHolder.setCollapse(false);
-//
-//                                holder.toggleCollapse();
-//                                mPreviousHolder = holder;
-//                        }
-//                });
+    @Override
+    public void onBindViewHolder(@NonNull FitViewHolder holder, int position) {
+        if (getItemViewType(position) == TYPE_FOOTER){
+            return;
         }
+        FitVO fitVO = list.get(position);
+        holder.setFitVO(fitVO);
+    }
 
-        @Override
-        public int getItemCount() {
-                return list.size();
+    @Override
+    public int getItemCount() {
+        return list.size() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        // 最后一个item设置为footerView
+        if (position + 1 == getItemCount()) {
+            return TYPE_FOOTER;
+        } else {
+            return TYPE_ITEM;
         }
+    }
+
+    public void resetDate(List<FitVO> FitVOs) {
+        this.list = FitVOs;
+        notifyDataSetChanged();
+    }
+
+    public void appendDate(List<FitVO> FitVOs) {
+        this.list.addAll(FitVOs);
+        notifyDataSetChanged();
+    }
+
+
 }
