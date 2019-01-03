@@ -1,6 +1,8 @@
 package cn.lujiawu.app.fitlist;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.View;
@@ -11,6 +13,7 @@ import cn.lujiawu.app.R;
 public class FitViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
     private FitVO fitVO;
+    private int position;
 
     TextView cadenceView;
     TextView caloriesView;
@@ -36,7 +39,7 @@ public class FitViewHolder extends RecyclerView.ViewHolder implements View.OnCre
 
     }
 
-    public void setFitVO(FitVO fitVO) {
+    public void setFitVO(FitVO fitVO, int position) {
         this.fitVO = fitVO;
         //TODO here
         cadenceView.setText(fitVO.getCadence());
@@ -44,17 +47,28 @@ public class FitViewHolder extends RecyclerView.ViewHolder implements View.OnCre
         distanceView.setText(fitVO.getDistance());
         durationView.setText(fitVO.getDuration());
         hrView.setText(fitVO.getHr());
-        statusView.setText(fitVO.getMoveId());
+        if (TextUtils.isEmpty(fitVO.getMoveId())) {
+            statusView.setText("待同步");
+            statusView.setTextColor(Color.RED);
+        }else {
+            statusView.setText("已同步");
+            statusView.setTextColor(Color.GREEN);
+        }
         speedView.setText(fitVO.getSpeed());
         titleView.setText(fitVO.getTitle());
+
+        this.position = position;
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-        menu.add(Menu.NONE, 1, 1, "Edit");
-        menu.add(Menu.NONE, 2, 2, "Delete");
+        menu.add(Menu.NONE, position, 1, "打开garmin");
+        if (TextUtils.isEmpty(fitVO.getMoveId())) {
+            menu.add(Menu.NONE, position, 3, "同步move");
+        } else {
+            menu.add(Menu.NONE, position, 2, "打开move");
+        }
     }
-
 
     public static class FootViewHolder extends FitViewHolder {
 
@@ -64,12 +78,6 @@ public class FitViewHolder extends RecyclerView.ViewHolder implements View.OnCre
             super(itemView);
             foot_view_item_tv = (TextView) itemView.findViewById(R.id.foot_view_item_tv);
         }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-
-        }
-
 
     }
 

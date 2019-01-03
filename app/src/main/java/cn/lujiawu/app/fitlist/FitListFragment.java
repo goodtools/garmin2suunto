@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import cn.lujiawu.app.R;
+import cn.lujiawu.app.event.EventHandler;
+import cn.lujiawu.garmin2suunto.SyncService;
 import cn.lujiawu.garmin2suunto.fitlist.FitListService;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -29,8 +32,12 @@ public class FitListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private FitRecyclerViewAdapter mFitRecyclerViewAdapter;
     private FitListService mFitListService;
+    private SyncService mSyncService;
     private int mPage = 0;
     private int limit = 20;
+
+    public EventHandler eventHandler;
+
 
     @Nullable
     @Override
@@ -71,6 +78,7 @@ public class FitListFragment extends Fragment {
         mRecyclerView.setAdapter(mFitRecyclerViewAdapter);
 
         mFitListService = new FitListService();
+        mSyncService = new SyncService();
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int lastVisibleItem;
@@ -117,9 +125,9 @@ public class FitListFragment extends Fragment {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
-                    if (list.isEmpty()){
+                    if (list.isEmpty()) {
                         Toast.makeText(mSwipeRefreshLayout.getContext(), "没有更多的数据了", Toast.LENGTH_LONG).show();
-                    }else {
+                    } else {
                         mFitRecyclerViewAdapter.appendDate(list);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -133,4 +141,33 @@ public class FitListFragment extends Fragment {
         Toast.makeText(mSwipeRefreshLayout.getContext(), "网络请求失败 " + e.getMessage(), Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int position = item.getItemId();
+        FitVO fitVO = mFitRecyclerViewAdapter.getFitVO(position);
+        switch (item.getOrder()) {
+            case 1:
+                String url = "https://connect.garmin.cn/modern/activity/" + fitVO.getActivityId();
+                eventHandler.openWebView(url);
+                break;
+            case 2:
+                String url2 = "http://www.movescount.com/moves/move" + fitVO.getMoveId();
+                eventHandler.openWebView(url2);
+                break;
+            case 3:
+                mSyncService.getMoveFromGarminAct(fitVO.getActivityId())
+                        .flatMap(mSyncService::saveMove)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(moveResult -> {
+                            fitVO.setMoveId(moveResult.getMoveID());
+                            mFitRecyclerViewAdapter.notifyDataSetChanged();
+                        }, this::handleException);
+                //start to sync
+                //update current vo
+                //reload url
+                break;
+        }
+        return true;
+    }
 }

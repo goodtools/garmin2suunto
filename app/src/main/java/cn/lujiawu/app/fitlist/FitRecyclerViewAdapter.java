@@ -61,7 +61,7 @@ public class FitRecyclerViewAdapter
             return;
         }
         FitVO fitVO = list.get(position);
-        holder.setFitVO(fitVO);
+        holder.setFitVO(fitVO,position);
     }
 
     @Override
@@ -78,6 +78,13 @@ public class FitRecyclerViewAdapter
             return TYPE_FOOTER;
         }
         return TYPE_ITEM;
+    }
+
+    public FitVO getFitVO(int position) {
+        if (position > list.size()){
+            return null;
+        }
+        return list.get(position);
     }
 
     public boolean isFootPosition(int position){

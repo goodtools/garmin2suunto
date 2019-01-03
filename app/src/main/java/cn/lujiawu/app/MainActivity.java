@@ -1,6 +1,8 @@
 package cn.lujiawu.app;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,16 +13,19 @@ import android.view.MenuItem;
 
 import java.util.List;
 
+import cn.lujiawu.app.event.EventHandler;
 import cn.lujiawu.app.fitlist.FitListFragment;
 import cn.lujiawu.app.settings.SettingFragment;
+import cn.lujiawu.app.webview.WebViewFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EventHandler {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loadFragment(FitListFragment.class);
+        FitListFragment fitListFragment = loadFragment(FitListFragment.class);
+        fitListFragment.eventHandler = this;
     }
 
     @Override
@@ -54,8 +59,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    private void loadFragment(Class fragmentClazz) {
+    private <T> T loadFragment(Class<T> fragmentClazz) {
         String fragmentTag = fragmentClazz.getSimpleName();
         Fragment showFragment = getSupportFragmentManager().findFragmentByTag(fragmentTag);
         boolean isExist = true;
@@ -67,16 +71,15 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException("fragment not exist " + fragmentClazz.getName());
         }
         if (showFragment.isVisible()) {
-            return;
+            return (T) showFragment;
         }
-
         Fragment visibleFragment = getVisibleFragment();
         if (isExist) {
             showAndHideFragment(showFragment, visibleFragment, fragmentTag);
         } else {
             addAndHideFragment(showFragment, visibleFragment, fragmentTag);
         }
-
+        return (T) showFragment;
     }
 
     private Fragment createFragment(Class fragmentClazz) {
@@ -134,5 +137,12 @@ public class MainActivity extends AppCompatActivity {
                     .hide(hideFragment)
                     .commit();
         }
+    }
+
+    @Override
+    public void openWebView(String url) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 }

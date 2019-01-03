@@ -35,9 +35,9 @@
                 android:id="@+id/fit_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:paddingTop="4sp"
                 android:textAlignment="center"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
