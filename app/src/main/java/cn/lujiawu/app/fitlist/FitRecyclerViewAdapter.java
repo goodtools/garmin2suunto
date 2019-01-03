@@ -17,6 +17,13 @@ public class FitRecyclerViewAdapter
     private static final int TYPE_ITEM = 0;  //普通Item View
     private static final int TYPE_FOOTER = 1;  //顶部FootView
 
+    //上拉加载更多
+    public static final int PULLUP_LOAD_MORE = 0;
+    //正在加载中
+    public static final int LOADING_MORE = 1;
+
+    private int load_more_status = PULLUP_LOAD_MORE;
+
     private boolean displayLoadMore() {
         return list.size() > 10;
     }
@@ -73,14 +80,23 @@ public class FitRecyclerViewAdapter
         return TYPE_ITEM;
     }
 
+    public boolean isFootPosition(int position){
+        return TYPE_FOOTER == getItemViewType(position);
+    }
+
+    public void changeMoreStatus(int status) {
+        load_more_status = status;
+        notifyDataSetChanged();
+    }
+
     public void resetDate(List<FitVO> FitVOs) {
         this.list = FitVOs;
-        notifyDataSetChanged();
+        changeMoreStatus(PULLUP_LOAD_MORE);
     }
 
     public void appendDate(List<FitVO> FitVOs) {
         this.list.addAll(FitVOs);
-        notifyDataSetChanged();
+        changeMoreStatus(PULLUP_LOAD_MORE);
     }
 
 

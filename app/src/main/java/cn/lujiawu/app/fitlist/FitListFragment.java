@@ -72,6 +72,25 @@ public class FitListFragment extends Fragment {
 
         mFitListService = new FitListService();
 
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int lastVisibleItem;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && mFitRecyclerViewAdapter.isFootPosition(lastVisibleItem)) {
+                    mFitRecyclerViewAdapter.changeMoreStatus(FitRecyclerViewAdapter.LOADING_MORE);
+                    loadNextPage();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+            }
+        });
+
         startup();
     }
 
@@ -91,13 +110,18 @@ public class FitListFragment extends Fragment {
     }
 
     private void loadNextPage() {
-        mFitListService.getActivityPaged(++mPage, limit)
+        mPage++;
+        mFitListService.getActivityPaged(mPage * limit, limit)
                 .subscribeOn(Schedulers.io())
                 .map(FitConverter::convert)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
-                    mFitRecyclerViewAdapter.appendDate(list);
+                    if (list.isEmpty()){
+                        Toast.makeText(mSwipeRefreshLayout.getContext(), "没有更多的数据了", Toast.LENGTH_LONG).show();
+                    }else {
+                        mFitRecyclerViewAdapter.appendDate(list);
+                    }
                     mSwipeRefreshLayout.setRefreshing(false);
                 }, this::handleException);
     }
