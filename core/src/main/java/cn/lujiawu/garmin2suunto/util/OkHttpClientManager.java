@@ -22,7 +22,6 @@ public class OkHttpClientManager {
     public static void init() {
         SimpleCookieJar simpleCookieJar = new SimpleCookieJar();
         OkHttpClientManager.init(null, new AutoLoginInterceptor(new AutoLoginer(), simpleCookieJar), simpleCookieJar);
-
     }
 
     public static synchronized OkHttpClient getInstance() {

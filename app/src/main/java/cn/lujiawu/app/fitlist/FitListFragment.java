@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import cn.lujiawu.app.R;
 import cn.lujiawu.garmin2suunto.SyncService;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -70,8 +72,7 @@ public class FitListFragment extends Fragment {
 
     private void startup() {
 
-        mSyncService
-                .getActivityPaged(0, 20)
+        mSyncService.getActivityPaged(0, 20)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
@@ -79,6 +80,8 @@ public class FitListFragment extends Fragment {
                     mSwipeRefreshLayout.setRefreshing(false);
                 }, e -> {
                     Log.e("net", e.getMessage(), e);
+                    mRecyclerView.setAdapter(new FitRecyclerViewAdapter(new ArrayList()));
+                    mSwipeRefreshLayout.setRefreshing(false);
                     Toast.makeText(mSwipeRefreshLayout.getContext(), "网络请求失败", Toast.LENGTH_LONG).show();
                 });
 

@@ -31,7 +31,6 @@ public class SyncApplication extends Application {
         @Override
         public boolean autoLogin(String url) {
             try {
-                Properties properties = new Properties();
                 SettingVO instance = SettingManager.getInstance();
                 return new GarminConnectApi().login(instance.garminUserName, instance.garminPassword);
             } catch (Throwable e) {

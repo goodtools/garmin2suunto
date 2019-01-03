@@ -1,75 +1,80 @@
-package cn.lujiawu.garmin2suunto;
-
-import com.google.gson.Gson;
-
-import org.junit.Test;
-
-import cn.lujiawu.garmin2suunto.garmin.AutoLoginInterceptor;
-import cn.lujiawu.garmin2suunto.garmin.SimpleCookieJar;
-import cn.lujiawu.garmin2suunto.garmin.api.ActivityItem;
-import cn.lujiawu.garmin2suunto.util.AutoLoginer;
-import cn.lujiawu.garmin2suunto.util.OkHttpClientManager;
-
-public class SyncServiceTest {
-
-    static {
-        SimpleCookieJar simpleCookieJar = new SimpleCookieJar();
-        OkHttpClientManager.init(null, new AutoLoginInterceptor(new AutoLoginer(), simpleCookieJar), simpleCookieJar);
-    }
-
-    @Test
-    public void test() {
-        SyncService syncService = new SyncService();
-        syncService.init();
-        syncService.getActivityItems("48802665", "2018-11-25")
-                .subscribe(list -> {
-                    for (ActivityItem item : list) {
-                        System.out.println(item);
-                    }
-                });
-    }
-
-    String activityIdOutdoor = "50453091";
-    String activityIdIndoor = "50360706";
-
-    @Test
-    public void testGetOutdoorMove() {
-        SyncService syncService = new SyncService();
-        syncService.init();
-        syncService.getMoveFromGarminAct(activityIdIndoor)
-                .subscribe(move -> {
-                    System.out.println(new Gson().toJson(move));
-                });
-
-    }
-
-    String email = "jiawu.lu@gmail.com";
-    String key = "";
-
-    @Test
-    public void testMoves() {
-        SyncService syncService = new SyncService();
-        syncService.init();
-
-//        syncService.getLatestMove(email, key)
-//                .subscribe(move -> {
-//                    System.out.println(move);
+//package cn.lujiawu.garmin2suunto;
+//
+//import com.google.gson.Gson;
+//
+//import org.junit.Test;
+//
+//import java.io.FileInputStream;
+//import java.io.IOException;
+//import java.util.Properties;
+//
+//import cn.lujiawu.garmin2suunto.garmin.api.ActivityItem;
+//import cn.lujiawu.garmin2suunto.util.AutoLoginer;
+//
+//public class SyncServiceTest {
+//
+//    static {
+//        Properties properties = new Properties();
+//        try {
+//            properties.load(new FileInputStream("config.properties"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        String userName = properties.getProperty("email");
+//        String key = properties.getProperty("key");
+//        SyncInitializer.init(new AutoLoginer(), userName, key);
+//    }
+//
+//    @Test
+//    public void test() {
+//        SyncService syncService = new SyncService();
+//        syncService.getActivityItems("48802665", "2018-11-25")
+//                .subscribe(list -> {
+//                    for (ActivityItem item : list) {
+//                        System.out.println(item);
+//                    }
 //                });
-
-
-        syncService.getMoveFromGarminAct(activityIdOutdoor)
-                .subscribe(result -> {
-                    System.out.println(result);
-                }, e -> {
-                    e.printStackTrace();
-                });
-
-//        syncService.getLatestMove(email, key)
+//    }
+//
+//    String activityIdOutdoor = "50453091";
+//    String activityIdIndoor = "50360706";
+//
+//    @Test
+//    public void testGetOutdoorMove() {
+//        SyncService syncService = new SyncService();
+//        syncService.getMoveFromGarminAct(activityIdIndoor)
 //                .subscribe(move -> {
-//                    System.out.println(move);
+//                    System.out.println(new Gson().toJson(move));
 //                });
-
-
-    }
-
-}
+//
+//    }
+//
+//    String email = "jiawu.lu@gmail.com";
+//    String key = "";
+//
+//    @Test
+//    public void testMoves() {
+//        SyncService syncService = new SyncService();
+//
+////        syncService.getLatestMove(email, key)
+////                .subscribe(move -> {
+////                    System.out.println(move);
+////                });
+//
+//
+//        syncService.getMoveFromGarminAct(activityIdOutdoor)
+//                .subscribe(result -> {
+//                    System.out.println(result);
+//                }, e -> {
+//                    e.printStackTrace();
+//                });
+//
+////        syncService.getLatestMove(email, key)
+////                .subscribe(move -> {
+////                    System.out.println(move);
+////                });
+//
+//
+//    }
+//
+//}
