@@ -1,5 +1,6 @@
 package cn.lujiawu.app.fitlist;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import cn.lujiawu.app.R;
 import cn.lujiawu.app.event.EventHandler;
 import cn.lujiawu.garmin2suunto.SyncService;
 import cn.lujiawu.garmin2suunto.fitlist.FitListService;
+import dmax.dialog.SpotsDialog;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -36,8 +38,8 @@ public class FitListFragment extends Fragment {
     private int mPage = 0;
     private int limit = 20;
 
+    private AlertDialog loadingDialog;
     public EventHandler eventHandler;
-
 
     @Nullable
     @Override
@@ -48,6 +50,7 @@ public class FitListFragment extends Fragment {
         Toolbar toolbar = (Toolbar) fragmentView.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
+        loadingDialog = new SpotsDialog.Builder().setContext(container.getContext()).build();
         return fragmentView;
 
     }
@@ -104,7 +107,9 @@ public class FitListFragment extends Fragment {
 
     private void startup() {
         mPage = 0;
-        mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.setRefreshing(false);
+        loadingDialog.setMessage("loading");
+        loadingDialog.show();
         mFitListService.getActivityPaged(mPage, limit)
                 .subscribeOn(Schedulers.io())
                 .map(FitConverter::convert)
@@ -113,6 +118,7 @@ public class FitListFragment extends Fragment {
                 .subscribe(list -> {
                     mFitRecyclerViewAdapter.resetDate(list);
                     mSwipeRefreshLayout.setRefreshing(false);
+                    loadingDialog.hide();
                 }, this::handleException);
 
     }
@@ -131,6 +137,7 @@ public class FitListFragment extends Fragment {
                         mFitRecyclerViewAdapter.appendDate(list);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
+                    loadingDialog.hide();
                 }, this::handleException);
     }
 
@@ -138,6 +145,7 @@ public class FitListFragment extends Fragment {
     private void handleException(Throwable e) {
         Log.e("net", e.getMessage(), e);
         mSwipeRefreshLayout.setRefreshing(false);
+        loadingDialog.hide();
         Toast.makeText(mSwipeRefreshLayout.getContext(), "网络请求失败 " + e.getMessage(), Toast.LENGTH_LONG).show();
     }
 
@@ -155,6 +163,7 @@ public class FitListFragment extends Fragment {
                 eventHandler.openWebView(url2);
                 break;
             case 3:
+                loadingDialog.show();
                 mSyncService.getMoveFromGarminAct(fitVO.getActivityId())
                         .flatMap(mSyncService::saveMove)
                         .subscribeOn(Schedulers.io())
@@ -162,7 +171,10 @@ public class FitListFragment extends Fragment {
                         .subscribe(moveResult -> {
                             fitVO.setMoveId(moveResult.getMoveID());
                             mFitRecyclerViewAdapter.notifyDataSetChanged();
-                        }, this::handleException);
+                            loadingDialog.hide();
+                        }, e -> {
+                            this.handleException(e);
+                        });
                 //start to sync
                 //update current vo
                 //reload url
