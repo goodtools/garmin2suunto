@@ -1,7 +1,5 @@
 package cn.lujiawu.app.fitlist;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +7,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import cn.lujiawu.app.R;
 
 public class FitRecyclerViewAdapter
@@ -61,7 +61,7 @@ public class FitRecyclerViewAdapter
             return;
         }
         FitVO fitVO = list.get(position);
-        holder.setFitVO(fitVO,position);
+        holder.setFitVO(fitVO, position);
     }
 
     @Override
@@ -81,13 +81,13 @@ public class FitRecyclerViewAdapter
     }
 
     public FitVO getFitVO(int position) {
-        if (position > list.size()){
+        if (position > list.size()) {
             return null;
         }
         return list.get(position);
     }
 
-    public boolean isFootPosition(int position){
+    public boolean isFootPosition(int position) {
         return TYPE_FOOTER == getItemViewType(position);
     }
 
