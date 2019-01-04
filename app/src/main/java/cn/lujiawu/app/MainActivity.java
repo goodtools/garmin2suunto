@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        fitListFragment = loadFragment(FitListFragment.class);
-//        fitListFragment.eventHandler = this;
-        loadFragment(MyAboutFragment.class);
+        fitListFragment = loadFragment(FitListFragment.class);
+        fitListFragment.eventHandler = this;
+//        loadFragment(MyAboutFragment.class);
     }
 
     @Override
@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             loadFragment(SettingFragment.class);
+            return true;
+        } else if (id == R.id.action_about) {
+            loadFragment(MyAboutFragment.class);
             return true;
         }
 
