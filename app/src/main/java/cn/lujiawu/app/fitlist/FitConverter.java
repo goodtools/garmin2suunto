@@ -30,7 +30,9 @@ public class FitConverter {
             }else {
                 fitVO.setType(SuuntoSport.TREADMILL);
             }
-        } else if ("cycling".equals(type)) {
+        }else if ("treadmill_running".equals(type)) {
+            fitVO.setType(SuuntoSport.TREADMILL);
+        }else if ("cycling".equals(type)) {
             fitVO.setType(SuuntoSport.CYCLING);
         }else {
             fitVO.setType(SuuntoSport.NOT_SPECIFIED_SPORT);

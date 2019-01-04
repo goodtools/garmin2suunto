@@ -102,13 +102,16 @@ public class Act2MoveConverter {
     }
 
     private static int getActivityType(Activity activity, boolean hasTrack) {
-        if ("running".equals(activity.getActivityTypeDTO().getTypeKey())) {
+        String type = activity.getActivityTypeDTO().getTypeKey();
+        if ("running".equals(type)) {
             if (hasTrack) {
                 return SuuntoSport.RUN.getId();
             }
             return SuuntoSport.TREADMILL.getId();
-        } else if ("cycling".equals(activity.getActivityTypeDTO().getTypeKey())) {
+        } else if ("cycling".equals(type)) {
             return SuuntoSport.CYCLING.getId();
+        }else if ("treadmill_running".equals(type)){
+            return SuuntoSport.TREADMILL.getId();
         }
         return SuuntoSport.NOT_SPECIFIED_SPORT.getId();
     }
