@@ -23,21 +23,33 @@
             android:orientation="horizontal"
             android:paddingTop="12dp">
 
+            <ImageView
+                android:id="@+id/fit_type"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                />
+
             <TextView
                 android:id="@+id/fit_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="10sp"
+                android:paddingRight="10sp"
                 android:layout_gravity="left"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TextView
+
+            <ImageView
                 android:id="@+id/fit_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="4sp"
+                android:layout_width="25sp"
+                android:layout_height="25sp"
+                android:paddingTop="2sp"
                 android:textAlignment="center"
-                android:textSize="14sp" />
+                android:src="@drawable/ok"
+                android:visibility="invisible"
+                />
+
         </LinearLayout>
 
         <LinearLayout
@@ -59,12 +71,11 @@
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="时长"
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
+                <ImageView
+                    android:layout_width="16sp"
+                    android:layout_height="16sp"
+                    android:src="@drawable/duration"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -80,12 +91,11 @@
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="距离"
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
+                <ImageView
+                    android:layout_width="16sp"
+                    android:layout_height="16sp"
+                    android:src="@drawable/distance"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -101,12 +111,11 @@
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="卡路里"
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
+                <ImageView
+                    android:layout_width="16sp"
+                    android:layout_height="16sp"
+                    android:src="@drawable/fire"
+                    />
             </LinearLayout>
 
         </LinearLayout>
@@ -130,12 +139,11 @@
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="速度"
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
+                <ImageView
+                    android:layout_width="16sp"
+                    android:layout_height="16sp"
+                    android:src="@drawable/speed"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -151,12 +159,11 @@
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="心率"
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
+                <ImageView
+                    android:layout_width="16sp"
+                    android:layout_height="16sp"
+                    android:src="@drawable/hr"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -172,12 +179,11 @@
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="步频"
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
+                <ImageView
+                    android:layout_width="16sp"
+                    android:layout_height="16sp"
+                    android:src="@drawable/run_cadence"
+                    />
             </LinearLayout>
 
         </LinearLayout>

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import cn.lujiawu.app.R;
@@ -21,8 +22,9 @@ public class FitViewHolder extends RecyclerView.ViewHolder implements View.OnCre
     TextView durationView;
     TextView hrView;
     TextView speedView;
-    TextView statusView;
+    ImageView statusView;
     TextView titleView;
+    ImageView typeView;
 
     public FitViewHolder(View itemView) {
         super(itemView);
@@ -36,6 +38,7 @@ public class FitViewHolder extends RecyclerView.ViewHolder implements View.OnCre
         speedView = itemView.findViewById(R.id.fit_speed);
         statusView = itemView.findViewById(R.id.fit_status);
         titleView = itemView.findViewById(R.id.fit_title);
+        typeView = itemView.findViewById(R.id.fit_type);
 
     }
 
@@ -48,14 +51,23 @@ public class FitViewHolder extends RecyclerView.ViewHolder implements View.OnCre
         durationView.setText(fitVO.getDuration());
         hrView.setText(fitVO.getHr());
         if (TextUtils.isEmpty(fitVO.getMoveId())) {
-            statusView.setText("待同步");
-            statusView.setTextColor(Color.RED);
+            statusView.setVisibility(View.INVISIBLE);
         }else {
-            statusView.setText("已同步");
-            statusView.setTextColor(Color.GREEN);
+            statusView.setVisibility(View.VISIBLE);
         }
         speedView.setText(fitVO.getSpeed());
         titleView.setText(fitVO.getTitle());
+
+        switch (fitVO.getType()){
+            case TREADMILL:
+                typeView.setImageResource(R.drawable.data_list_icon_treadmill);
+                break;
+            case CYCLING:
+                typeView.setImageResource(R.drawable.data_list_icon_cycle);
+                break;
+            default:
+                typeView.setImageResource(R.drawable.data_list_icon_run);
+        }
 
         this.position = position;
     }
