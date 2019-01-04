@@ -1,10 +1,12 @@
 package cn.lujiawu.app.settings;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -34,6 +36,12 @@ public class SettingFragment extends Fragment {
         view.findViewById(R.id.save_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+
                 SettingManager.save(mSettingVO);
                 eventHandler.back();
                 eventHandler.refreshFitList();

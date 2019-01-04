@@ -58,7 +58,7 @@
                         android:hint="password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:inputType="textPassword"
                         android:maxLines="1"
                         android:singleLine="true" />
 
@@ -100,9 +100,9 @@
                         android:hint="userKey"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:singleLine="true" />
+                        android:inputType="textEmailAddress"
+                        android:maxLines="2"
+                        android:singleLine="false" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
