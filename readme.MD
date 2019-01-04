@@ -25,6 +25,8 @@
 
 ![actions](./apks/mix.jpg)
 
+[youku视频](https://v.youku.com/v_show/id_XMzk5NzAzMDA2OA==.html)
+
 #### 设置
 
 #### GARMIN账号密码
