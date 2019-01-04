@@ -3,6 +3,7 @@ package cn.lujiawu.garmin2suunto.fitlist;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -43,8 +44,9 @@ public class FitListService {
         return moves.map(moveItems -> {
 
             List<FitItem> fitItemList = new ArrayList<>();
-
-            Map<String, MoveItem> map = moveItems.stream().collect(Collectors.toMap(MoveItem::getGarminActivityId, item -> item));
+            Map<String, MoveItem> map = moveItems.stream()
+                    .collect(Collectors.toMap(MoveItem::getGarminActivityId, item -> item ,
+                            (v1,v2) -> v2));
 
             for (ActivityItem activityItem : activityItemList) {
                 FitItem fitItem = new FitItem();

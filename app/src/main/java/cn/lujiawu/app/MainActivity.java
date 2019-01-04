@@ -19,11 +19,13 @@ import cn.lujiawu.app.settings.SettingFragment;
 
 public class MainActivity extends AppCompatActivity implements EventHandler {
 
+    FitListFragment fitListFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FitListFragment fitListFragment = loadFragment(FitListFragment.class);
+        fitListFragment = loadFragment(FitListFragment.class);
         fitListFragment.eventHandler = this;
     }
 
@@ -158,5 +160,10 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
     @Override
     public void back() {
         this.onBackPressed();
+    }
+
+    @Override
+    public void refreshFitList() {
+        this.fitListFragment.startup();
     }
 }

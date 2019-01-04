@@ -110,11 +110,13 @@
                     android:id="@+id/move_auth_link"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
-                    android:textSize="14sp"
                     android:clickable="true"
+                    android:paddingTop="10sp"
+                    android:paddingBottom="10sp"
+                    android:text="同步后再点击前往move官网授权"
+                    android:textColor="@android:color/holo_blue_dark"
                     android:textColorLink="@color/colorPrimary"
-                    android:text="点击前往move官网授权"/>
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/save_btn"
