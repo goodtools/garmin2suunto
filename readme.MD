@@ -23,12 +23,22 @@
 
 ### 操作指南
 
-![设置](./apks/g_1.jpg)
-![列表](./apks/g_2.jpg)
-![同步](./apks/g_3.jpg)
-![关于](./apks/g_4.jpg)
+![actions](./apks/mix.jpg)
 
-### 下载
+#### 设置
+
+#### GARMIN账号密码
+
+garmin connect提供的http接口的身份认证方式是cookie，而写入cookie又必须依赖于在garmin的sso登录页面传入用户名和密码，
+所以为了正确的从garmin拿到接口数据，必须填写。
+
+#### suunto账号和key
+
+suunto的授权方式比较简单，是通过key的方式，当一个新的key（uuid）+ 账号 通过接口访问suunto服务的时候，suunto会生成一个授权请求，
+用户必须亲自手动的接受授权才能做正确的通讯，请务必注意:
+[http://www.movescount.com/settings#connections](http://www.movescount.com/settings#connections)
+
+#### 下载
 
 [1.0](./apks/g2m-1.0.apk)
 

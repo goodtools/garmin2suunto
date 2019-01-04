@@ -22,11 +22,10 @@ public class FitConverter {
         }
 
         fitVO.setTitle(activity.getStartTimeLocal().substring(5, 16) + " " + activity.getActivityName());
-
 //        "running", "cycling"
         String type = activity.getActivityType().getTypeKey();
         if ("running".equals(type)) {
-            if (activity.getActivityName().contains(" ")) {
+            if (null != activity.getStartLatitude()) {
                 fitVO.setType(SuuntoSport.RUN);
             }else {
                 fitVO.setType(SuuntoSport.TREADMILL);
@@ -37,7 +36,7 @@ public class FitConverter {
             fitVO.setType(SuuntoSport.NOT_SPECIFIED_SPORT);
         }
 
-        fitVO.setDuration(String.format("%.2f", (activity.getDuration() / 60)));
+        fitVO.setDuration(formatDuration(activity.getDuration()));
         fitVO.setDistance(String.format("%.2f", (activity.getDistance() / 1000)));
         fitVO.setCalories(String.format("%.1f", activity.getCalories()));
         fitVO.setSpeed(String.format("%.1f/%.1f", activity.getAverageSpeed() * 3.6, activity.getMaxSpeed() * 3.6));

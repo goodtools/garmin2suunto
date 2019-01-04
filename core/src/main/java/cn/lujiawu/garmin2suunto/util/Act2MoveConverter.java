@@ -20,7 +20,7 @@ public class Act2MoveConverter {
     public static Move convert(Activity activity, ActivitySplits splits, ActivityDetail detail) {
 
         Move move = new Move();
-        move.setActivityID(getActivityType(activity));
+
         move.setNotes(getNotes(activity));
 
         Activity.SummaryDTO summaryDTO = activity.getSummaryDTO();
@@ -92,17 +92,21 @@ public class Act2MoveConverter {
 
         move.setMarks(convertMoveMarks(splits));
         move.setSamples(new Move.Samples(convertSampleSet(detail)));
-        move.setTrack(new Move.Track(convertTrackPoint(detail)));
+        List<TrackPoint> trackPoints = convertTrackPoint(detail);
+        move.setTrack(new Move.Track(trackPoints));
+
+        //TODO
+        move.setActivityID(getActivityType(activity,!trackPoints.isEmpty()));
 
         return move;
     }
 
-    private static int getActivityType(Activity activity) {
+    private static int getActivityType(Activity activity, boolean hasTrack) {
         if ("running".equals(activity.getActivityTypeDTO().getTypeKey())) {
-            if (activity.getActivityName().equals("跑步")) {
-                return SuuntoSport.TREADMILL.getId();
+            if (hasTrack) {
+                return SuuntoSport.RUN.getId();
             }
-            return SuuntoSport.RUN.getId();
+            return SuuntoSport.TREADMILL.getId();
         } else if ("cycling".equals(activity.getActivityTypeDTO().getTypeKey())) {
             return SuuntoSport.CYCLING.getId();
         }
