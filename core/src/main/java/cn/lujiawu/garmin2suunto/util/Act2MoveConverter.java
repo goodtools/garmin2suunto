@@ -8,10 +8,7 @@ package cn.lujiawu.garmin2suunto.util;
 import cn.lujiawu.garmin2suunto.garmin.api.Activity;
 import cn.lujiawu.garmin2suunto.garmin.api.ActivityDetail;
 import cn.lujiawu.garmin2suunto.garmin.api.ActivitySplits;
-import cn.lujiawu.garmin2suunto.move.api.Move;
-import cn.lujiawu.garmin2suunto.move.api.MoveMark;
-import cn.lujiawu.garmin2suunto.move.api.SampleSet;
-import cn.lujiawu.garmin2suunto.move.api.TrackPoint;
+import cn.lujiawu.garmin2suunto.move.api.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
@@ -102,11 +99,14 @@ public class Act2MoveConverter {
 
     private static int getActivityType(Activity activity) {
         if ("running".equals(activity.getActivityTypeDTO().getTypeKey())) {
-            return 3;
+            if (activity.getActivityName().length() > 2) {
+                return SuuntoSport.TREADMILL.getId();
+            }
+            return SuuntoSport.RUN.getId();
         } else if ("cycling".equals(activity.getActivityTypeDTO().getTypeKey())) {
-            return 4;
+            return SuuntoSport.CYCLING.getId();
         }
-        return 1;
+        return SuuntoSport.NOT_SPECIFIED_SPORT.getId();
     }
 
     private static String getNotes(Activity activity) {
