@@ -26,7 +26,9 @@ public class FitViewHolder extends RecyclerView.ViewHolder implements View.OnCre
     ImageView typeView;
 
     public FitViewHolder(View itemView) {
+
         super(itemView);
+
         itemView.setOnCreateContextMenuListener(this);
 
         cadenceView = itemView.findViewById(R.id.fit_cadence);
