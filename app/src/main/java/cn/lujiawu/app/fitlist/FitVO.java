@@ -2,13 +2,15 @@ package cn.lujiawu.app.fitlist;
 
 import java.io.Serializable;
 
+import cn.lujiawu.garmin2suunto.move.api.SuuntoSport;
+
 public class FitVO implements Serializable {
 
     private String activityId;
     private String moveId;
 
     private String title;
-    private String type;
+    private SuuntoSport type;
 
     private String duration;
     private String distance;
@@ -42,11 +44,11 @@ public class FitVO implements Serializable {
         this.title = title;
     }
 
-    public String getType() {
+    public SuuntoSport getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(SuuntoSport type) {
         this.type = type;
     }
 
