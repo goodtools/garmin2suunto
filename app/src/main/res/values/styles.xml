@@ -24,4 +24,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.MaterialAboutActivity.Light" parent="Theme.Mal.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorLightBar</item>
+        <item name="colorPrimaryDark">@color/colorLightStatus</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
 </resources>
