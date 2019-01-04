@@ -21,6 +21,17 @@
 	2. 根据mxactivitymover提供的接口，将garmin的数据转换到suunto的数据结构
 	3. 调用sunnto的接口进行记录保存
 
+### 操作指南
+
+![设置](./apks/g_1.jpg)
+![列表](./apks/g_2.jpg)
+![同步](./apks/g_3.jpg)
+![关于](./apks/g_4.jpg)
+
+### 下载
+
+[1.0](./apks/g2m-1.0.apk)
+
 ### 致谢
 
 1. 感谢mxactivitymover为我提供了api的调用参考
