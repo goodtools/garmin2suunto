@@ -43,6 +43,7 @@ public class ActivityItem implements Serializable {
     private Double duration;
     private Double averageSpeed;
     private Double maxSpeed;
+    private Double startLatitude;
 
     @Override
     public boolean equals(Object o) {

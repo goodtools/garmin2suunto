@@ -16,28 +16,7 @@
             android:adjustViewBounds="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/g_1" />
-
-        <ImageView
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/g_2" />
-
-        <ImageView
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/g_3" />
-
-        <ImageView
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/g_4" />
+            android:src="@drawable/mix" />
 
     </LinearLayout>
 
