@@ -182,7 +182,7 @@
                 <ImageView
                     android:layout_width="16sp"
                     android:layout_height="16sp"
-                    android:src="@drawable/run_cadence"
+                    android:src="@drawable/cadence"
                     />
             </LinearLayout>
 
