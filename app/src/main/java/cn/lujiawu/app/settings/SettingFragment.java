@@ -1,15 +1,15 @@
 package cn.lujiawu.app.settings;
 
-import android.databinding.DataBindingUtil;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import cn.lujiawu.app.R;
 import cn.lujiawu.app.databinding.ContentSettingsBinding;
 import cn.lujiawu.app.event.EventHandler;
@@ -26,6 +26,7 @@ public class SettingFragment extends Fragment {
         mSettingVO = SettingManager.getInstance();
         ContentSettingsBinding binding = DataBindingUtil.inflate(
                 inflater, R.layout.content_settings, container, false);
+
         View view = binding.getRoot();
         //here data must be an instance of the class MarsDataProvider
         binding.setSettingVO(mSettingVO);

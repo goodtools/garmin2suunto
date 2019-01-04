@@ -1,7 +1,5 @@
 package cn.lujiawu.app.fitlist;
 
-import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -9,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
 import cn.lujiawu.app.R;
 
 public class FitViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
@@ -52,13 +51,13 @@ public class FitViewHolder extends RecyclerView.ViewHolder implements View.OnCre
         hrView.setText(fitVO.getHr());
         if (TextUtils.isEmpty(fitVO.getMoveId())) {
             statusView.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             statusView.setVisibility(View.VISIBLE);
         }
         speedView.setText(fitVO.getSpeed());
         titleView.setText(fitVO.getTitle());
 
-        switch (fitVO.getType()){
+        switch (fitVO.getType()) {
             case TREADMILL:
                 typeView.setImageResource(R.drawable.data_list_icon_treadmill);
                 break;

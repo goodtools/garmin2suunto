@@ -1,7 +1,6 @@
 package cn.lujiawu.app.webview;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +8,8 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
+import androidx.fragment.app.Fragment;
 import cn.lujiawu.app.R;
 
 public class WebViewFragment extends Fragment {
