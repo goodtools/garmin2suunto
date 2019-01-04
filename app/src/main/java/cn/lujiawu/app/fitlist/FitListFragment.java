@@ -109,13 +109,7 @@ public class FitListFragment extends Fragment {
         startup();
     }
 
-    private void startup() {
-
-        SettingVO setting = SettingManager.getInstance();
-        if (StringUtils.isAnyEmpty(setting.garminUserName,setting.garminPassword)){
-            eventHandler.openSettingView();
-            return;
-        }
+    public void startup() {
 
         mPage = 0;
         mSwipeRefreshLayout.setRefreshing(false);
@@ -158,6 +152,18 @@ public class FitListFragment extends Fragment {
         mSwipeRefreshLayout.setRefreshing(false);
         loadingDialog.hide();
         Toast.makeText(mSwipeRefreshLayout.getContext(), "网络请求失败 " + e.getMessage(), Toast.LENGTH_LONG).show();
+
+        openSettingView();
+
+    }
+
+    private boolean openSettingView() {
+        SettingVO setting = SettingManager.getInstance();
+        if (StringUtils.isAnyEmpty(setting.garminUserName, setting.garminPassword)) {
+            eventHandler.openSettingView();
+            return true;
+        }
+        return false;
     }
 
     @Override
