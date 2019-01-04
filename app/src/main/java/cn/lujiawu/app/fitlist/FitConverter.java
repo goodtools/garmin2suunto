@@ -19,7 +19,11 @@ public class FitConverter {
         if (null != fitItem.getMove()) {
             fitVO.setMoveId(fitItem.getMove().getMoveId().toString());
         }
-        fitVO.setTitle(activity.getStartTimeLocal().substring(5, 16) + " " + activity.getActivityName());
+        if (activity.getActivityName().equals("跑步")) {
+            fitVO.setTitle(activity.getStartTimeLocal().substring(5, 16) + " 跑步机 跑步");
+        } else {
+            fitVO.setTitle(activity.getStartTimeLocal().substring(5, 16) + " " + activity.getActivityName());
+        }
         fitVO.setType(activity.getActivityType().getTypeKey());
         fitVO.setDuration(String.format("%.1f", (activity.getDuration() / 60)));
         fitVO.setDistance(String.format("%.1f", (activity.getDistance() / 1000)));

@@ -106,6 +106,15 @@
 
                 </android.support.design.widget.TextInputLayout>
 
+                <TextView
+                    android:id="@+id/move_auth_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
+                    android:clickable="true"
+                    android:textColorLink="@color/colorPrimary"
+                    android:text="点击前往move官网授权"/>
 
                 <Button
                     android:id="@+id/save_btn"

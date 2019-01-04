@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.UUID;
+
 import cn.lujiawu.garmin2suunto.SyncInitializer;
 
 public class SettingManager {
@@ -17,7 +19,7 @@ public class SettingManager {
         settingVO.garminUserName = sharedPreferences.getString("garminUserName", "");
         settingVO.garminPassword = sharedPreferences.getString("garminPassword", "");
         settingVO.suuntoUserName = sharedPreferences.getString("suuntoUserName", "");
-        settingVO.suuntoUserKey = sharedPreferences.getString("suuntoUserKey", "");
+        settingVO.suuntoUserKey = sharedPreferences.getString("suuntoUserKey", UUID.randomUUID().toString());
     }
 
     public static SettingVO getInstance() {
