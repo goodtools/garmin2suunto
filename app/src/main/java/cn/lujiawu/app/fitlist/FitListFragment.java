@@ -114,7 +114,7 @@ public class FitListFragment extends Fragment {
 
         mPage = 0;
         mSwipeRefreshLayout.setRefreshing(false);
-        loadingDialog.setMessage("loading");
+        loadingDialog.setMessage("正在加载");
         loadingDialog.show();
         mFitListService.getActivityPaged(mPage, limit)
                 .subscribeOn(Schedulers.io())
@@ -181,8 +181,13 @@ public class FitListFragment extends Fragment {
                 eventHandler.openWebView(url2);
                 break;
             case 3:
+                loadingDialog.setMessage("获取数据");
                 loadingDialog.show();
                 mSyncService.getMoveFromGarminAct(fitVO.getActivityId())
+                        .doOnSuccess(move -> {
+                            loadingDialog.setMessage("保存数据");
+                        })
+                        .observeOn(Schedulers.io())
                         .flatMap(mSyncService::saveMove)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
