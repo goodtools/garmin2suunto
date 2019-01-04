@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import cn.lujiawu.app.about.MyAboutFragment;
+import cn.lujiawu.app.about.UsageFragment;
 import cn.lujiawu.app.event.EventHandler;
 import cn.lujiawu.app.fitlist.FitListFragment;
 import cn.lujiawu.app.settings.SettingFragment;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
         fitListFragment = loadFragment(FitListFragment.class);
         fitListFragment.eventHandler = this;
 //        loadFragment(MyAboutFragment.class);
+//        loadFragment(UsageFragment.class);
     }
 
     @Override
@@ -60,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
             return true;
         } else if (id == R.id.action_about) {
             loadFragment(MyAboutFragment.class);
+            return true;
+        } else if (id == R.id.action_help) {
+            loadFragment(UsageFragment.class);
             return true;
         }
 
