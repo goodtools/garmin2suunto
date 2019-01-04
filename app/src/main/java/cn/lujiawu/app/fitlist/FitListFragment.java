@@ -18,10 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 
 import cn.lujiawu.app.R;
 import cn.lujiawu.app.event.EventHandler;
+import cn.lujiawu.app.settings.SettingManager;
+import cn.lujiawu.app.settings.SettingVO;
 import cn.lujiawu.garmin2suunto.SyncService;
 import cn.lujiawu.garmin2suunto.fitlist.FitListService;
 import dmax.dialog.SpotsDialog;
@@ -106,6 +110,13 @@ public class FitListFragment extends Fragment {
     }
 
     private void startup() {
+
+        SettingVO setting = SettingManager.getInstance();
+        if (StringUtils.isAnyEmpty(setting.garminUserName,setting.garminPassword)){
+            eventHandler.openSettingView();
+            return;
+        }
+
         mPage = 0;
         mSwipeRefreshLayout.setRefreshing(false);
         loadingDialog.setMessage("loading");

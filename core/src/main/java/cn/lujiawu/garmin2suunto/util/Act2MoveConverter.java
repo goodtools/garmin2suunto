@@ -99,7 +99,7 @@ public class Act2MoveConverter {
 
     private static int getActivityType(Activity activity) {
         if ("running".equals(activity.getActivityTypeDTO().getTypeKey())) {
-            if (activity.getActivityName().length() > 2) {
+            if (activity.getActivityName().equals("跑步")) {
                 return SuuntoSport.TREADMILL.getId();
             }
             return SuuntoSport.RUN.getId();

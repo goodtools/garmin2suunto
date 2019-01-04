@@ -16,7 +16,6 @@ import java.util.List;
 import cn.lujiawu.app.event.EventHandler;
 import cn.lujiawu.app.fitlist.FitListFragment;
 import cn.lujiawu.app.settings.SettingFragment;
-import cn.lujiawu.app.webview.WebViewFragment;
 
 public class MainActivity extends AppCompatActivity implements EventHandler {
 
@@ -84,6 +83,11 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
 
     private Fragment createFragment(Class fragmentClazz) {
         try {
+            if (fragmentClazz == SettingFragment.class) {
+                SettingFragment settingFragment = new SettingFragment();
+                settingFragment.setEventHandler(this);
+                return settingFragment;
+            }
             return (Fragment) fragmentClazz.newInstance();
         } catch (Exception e) {
             return null;
@@ -144,5 +148,15 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
+    }
+
+    @Override
+    public void openSettingView() {
+        loadFragment(SettingFragment.class);
+    }
+
+    @Override
+    public void back() {
+        this.onBackPressed();
     }
 }

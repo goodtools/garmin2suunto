@@ -11,10 +11,12 @@ import android.widget.Button;
 
 import cn.lujiawu.app.R;
 import cn.lujiawu.app.databinding.ContentSettingsBinding;
+import cn.lujiawu.app.event.EventHandler;
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
 
     private SettingVO mSettingVO;
+    private EventHandler eventHandler;
 
     @Nullable
     @Override
@@ -29,6 +31,13 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
         view.findViewById(R.id.save_btn).setOnClickListener(this);
 
+        view.findViewById(R.id.move_auth_link).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                eventHandler.openWebView("http://www.movescount.com/settings#connections");
+            }
+        });
+
         return view;
 
     }
@@ -37,5 +46,10 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         SettingManager.save(mSettingVO);
+        this.eventHandler.back();
+    }
+
+    public void setEventHandler(EventHandler eventHandler) {
+        this.eventHandler = eventHandler;
     }
 }
