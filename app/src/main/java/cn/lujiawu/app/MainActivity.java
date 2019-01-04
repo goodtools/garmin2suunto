@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import cn.lujiawu.app.about.MyAboutFragment;
 import cn.lujiawu.app.event.EventHandler;
 import cn.lujiawu.app.fitlist.FitListFragment;
 import cn.lujiawu.app.settings.SettingFragment;
@@ -25,8 +26,10 @@ public class MainActivity extends AppCompatActivity implements EventHandler {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fitListFragment = loadFragment(FitListFragment.class);
-        fitListFragment.eventHandler = this;
+
+//        fitListFragment = loadFragment(FitListFragment.class);
+//        fitListFragment.eventHandler = this;
+        loadFragment(MyAboutFragment.class);
     }
 
     @Override
