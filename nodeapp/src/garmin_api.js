@@ -37,7 +37,7 @@ const querystring = require('querystring');
 // axios.defaults.jar = cookieJar
 
 userName = 'jiawu.lu@gmail.com'
-password = 'Taobao1234'
+password = ''
 cookiejar = {
     cookies : {},
     update : function (arr) {
