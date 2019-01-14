@@ -11,7 +11,8 @@ var loginParmas = {
     "consumeServiceTicket": "false"
 }
 
-const axios = require('axios');
+const axios = require('axios').create({
+});
 const querystring = require('querystring');
 
 var cookiejar = {

@@ -1,0 +1,317 @@
+
+信息: --> GET https://connect.garmin.cn/modern/proxy/activitylist-service/activities/search/activities?limit=20&start=0
+
+信息: --> END GET
+
+信息: --> GET https://sso.garmin.cn/sso/login?service=https%3A%2F%2Fconnect.garmin.cn%2Fmodern&clientId=GarminConnect&gauthHost=https%3A%2F%2Fsso.garmin.cn%2Fsso&consumeServiceTicket=false
+
+信息: --> END GET
+
+信息: <-- 200 OK https://sso.garmin.cn/sso/login?service=https%3A%2F%2Fconnect.garmin.cn%2Fmodern&clientId=GarminConnect&gauthHost=https%3A%2F%2Fsso.garmin.cn%2Fsso&consumeServiceTicket=false (229ms)
+
+信息: Date: Mon, 14 Jan 2019 02:40:54 GMT
+
+信息: Content-Type: text/html;charset=UTF-8
+
+信息: Transfer-Encoding: chunked
+
+信息: Connection: keep-alive
+
+信息: Set-Cookie: __cfduid=d4ead145a11228340e3c2160d5bae3ba61547433654; expires=Tue, 14-Jan-20 02:40:54 GMT; path=/; domain=.sso.garmin.cn; HttpOnly
+
+信息: Content-Language: en
+
+信息: Set-Cookie: org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE=en; Path=/
+
+信息: Set-Cookie: SESSION=c932aa03-494e-451a-8d3a-3dfb81e665be; Path=/sso/; Secure; HttpOnly
+
+信息: X-Robots-Tag: noindex
+
+信息: X-Vcap-Request-Id: 53913ff3-6028-4a76-6f38-fc3b5486e11e
+
+信息: Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+
+信息: Server: yunjiasu-nginx
+
+信息: CF-RAY: 498cbd93399d451d-TAO
+
+信息: <-- END HTTP
+
+信息: --> POST https://sso.garmin.cn/sso/login?service=https%3A%2F%2Fconnect.garmin.cn%2Fmodern&clientId=GarminConnect&gauthHost=https%3A%2F%2Fsso.garmin.cn%2Fsso&consumeServiceTicket=false
+
+信息: Content-Type: application/x-www-form-urlencoded
+
+信息: Content-Length: 76
+
+信息: --> END POST
+
+信息: <-- 200 OK https://sso.garmin.cn/sso/login?service=https%3A%2F%2Fconnect.garmin.cn%2Fmodern&clientId=GarminConnect&gauthHost=https%3A%2F%2Fsso.garmin.cn%2Fsso&consumeServiceTicket=false (419ms)
+
+信息: Date: Mon, 14 Jan 2019 02:40:54 GMT
+
+信息: Content-Type: text/html;charset=UTF-8
+
+信息: Transfer-Encoding: chunked
+
+信息: Connection: keep-alive
+
+信息: Content-Language: en
+
+信息: Set-Cookie: org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE=en; Path=/
+
+信息: Set-Cookie: CASTGC=TGT-405483-4b2bXc1CLfsbaoNXF9S0U6efMGuO76vjDHkxcVwbKcgfzOirvX-cas; Path=/sso; Secure; HttpOnly
+
+信息: Set-Cookie: GARMIN-SSO=1; Domain=garmin.cn; Path=/
+
+信息: Set-Cookie: GarminNoCache=true; Domain=garmin.cn; Path=/
+
+信息: Set-Cookie: GarminBuyCacheKey=; Max-Age=0; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Domain=garmin.com; Path=/
+
+信息: Set-Cookie: GARMIN-SSO-GUID=D93FFDDCBB34AC46E13D0583C6D71DD1B9DBFA18; Domain=garmin.cn; Path=/
+
+信息: Set-Cookie: GARMIN-SSO-CUST-GUID=08fbb9cf-79a8-4d8e-8ab5-55dd9941addb; Domain=garmin.cn; Path=/
+
+信息: Set-Cookie: SESSION=; Max-Age=0; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/sso/; Secure; HttpOnly
+
+信息: X-Robots-Tag: noindex
+
+信息: X-Vcap-Request-Id: fff3bbce-340f-4797-6e36-ff42cb9c3a48
+
+信息: Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+
+信息: Server: yunjiasu-nginx
+
+信息: CF-RAY: 498cbd93c9a1451d-TAO
+
+信息: <-- END HTTP
+
+信息: --> GET https://connect.garmin.cn/modern
+
+信息: --> END GET
+
+信息: <-- 302 Found https://connect.garmin.cn/modern (293ms)
+
+信息: Date: Mon, 14 Jan 2019 02:40:55 GMT
+
+信息: Content-Length: 0
+
+信息: Connection: keep-alive
+
+信息: Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+信息: Expires: 0
+
+信息: Location: https://sso.garmin.cn/sso/login?service=https%3A%2F%2Fconnect.garmin.cn%2Fmodern&webhost=https%3A%2F%2Fconnect.garmin.com&gateway=true&generateExtraServiceTicket=true
+
+信息: Pragma: no-cache
+
+信息: Set-Cookie: SESSIONID=40933532-1470-4640-835c-674bf904b392; Path=/; Secure; HttpOnly
+
+信息: Strict-Transport-Security: max-age=31536000 ; includeSubDomains
+
+信息: X-Content-Type-Options: nosniff
+
+信息: X-Frame-Options: DENY
+
+信息: X-Vcap-Request-Id: 901fbab2-5a02-4cfa-5642-350e61dfa294
+
+信息: X-Xss-Protection: 1; mode=block
+
+信息: Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+
+信息: Server: yunjiasu-nginx
+
+信息: CF-RAY: 498cbd974dd18bda-SZX
+
+信息: <-- END HTTP
+
+信息: --> GET https://sso.garmin.cn/sso/login?service=https%3A%2F%2Fconnect.garmin.cn%2Fmodern&webhost=https%3A%2F%2Fconnect.garmin.com&gateway=true&generateExtraServiceTicket=true
+
+信息: --> END GET
+
+信息: <-- 302 Found https://sso.garmin.cn/sso/login?service=https%3A%2F%2Fconnect.garmin.cn%2Fmodern&webhost=https%3A%2F%2Fconnect.garmin.com&gateway=true&generateExtraServiceTicket=true (70ms)
+
+信息: Date: Mon, 14 Jan 2019 02:40:55 GMT
+
+信息: Content-Length: 0
+
+信息: Connection: keep-alive
+
+信息: Content-Language: en
+
+信息: Location: https://connect.garmin.cn/modern?ticket=ST-3631924-qsWffWTvh1wyWFBhZbxZ-cas
+
+信息: Set-Cookie: org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE=en; Path=/
+
+信息: Set-Cookie: SESSION=; Max-Age=0; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/sso/; Secure; HttpOnly
+
+信息: X-Robots-Tag: noindex
+
+信息: X-Vcap-Request-Id: ae573214-56c1-4421-418c-0a17ca0f6854
+
+信息: Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+
+信息: Server: yunjiasu-nginx
+
+信息: CF-RAY: 498cbd9859ff451d-TAO
+
+信息: <-- END HTTP
+
+信息: --> GET https://connect.garmin.cn/modern?ticket=ST-3631924-qsWffWTvh1wyWFBhZbxZ-cas
+
+信息: --> END GET
+
+信息: <-- 302 Found https://connect.garmin.cn/modern?ticket=ST-3631924-qsWffWTvh1wyWFBhZbxZ-cas (173ms)
+
+信息: Date: Mon, 14 Jan 2019 02:40:55 GMT
+
+信息: Content-Length: 0
+
+信息: Connection: keep-alive
+
+信息: Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+信息: Expires: 0
+
+信息: Location: https://connect.garmin.cn/modern
+
+信息: Pragma: no-cache
+
+信息: Strict-Transport-Security: max-age=31536000 ; includeSubDomains
+
+信息: X-Content-Type-Options: nosniff
+
+信息: X-Frame-Options: DENY
+
+信息: X-Vcap-Request-Id: f2ff290d-9710-41bd-75ed-08407d7760c5
+
+信息: X-Xss-Protection: 1; mode=block
+
+信息: Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+
+信息: Server: yunjiasu-nginx
+
+信息: CF-RAY: 498cbd98cde08bda-SZX
+
+信息: <-- END HTTP
+
+信息: --> GET https://connect.garmin.cn/modern
+
+信息: --> END GET
+
+信息: <-- 200 OK https://connect.garmin.cn/modern (864ms)
+
+信息: Date: Mon, 14 Jan 2019 02:40:56 GMT
+
+信息: Content-Type: text/html;charset=UTF-8
+
+信息: Transfer-Encoding: chunked
+
+信息: Connection: keep-alive
+
+信息: Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+信息: Content-Language: en-US
+
+信息: Expires: 0
+
+信息: Pragma: no-cache
+
+信息: Strict-Transport-Security: max-age=31536000 ; includeSubDomains
+
+信息: X-Application-Context: web-modern:prod-china,cloud:1
+
+信息: X-Content-Type-Options: nosniff
+
+信息: X-Frame-Options: DENY
+
+信息: X-Vcap-Request-Id: bcb3b14d-a4e0-4684-58ae-b1ba50a92c85
+
+信息: X-Xss-Protection: 1; mode=block
+
+信息: Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+
+信息: Server: yunjiasu-nginx
+
+信息: CF-RAY: 498cbd99ee288bda-SZX
+
+信息: <-- END HTTP
+
+信息: <-- 200 OK https://connect.garmin.cn/modern/proxy/activitylist-service/activities/search/activities?limit=20&start=0 (3303ms)
+
+信息: Date: Mon, 14 Jan 2019 02:40:56 GMT
+
+信息: Content-Type: application/json;charset=UTF-8
+
+信息: Transfer-Encoding: chunked
+
+信息: Connection: keep-alive
+
+信息: Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+
+信息: Cache-Control: no-cache, no-store, private
+
+信息: Expires: 0
+
+信息: Pragma: no-cache
+
+信息: Pragma: no-cache
+
+信息: Strict-Transport-Security: max-age=31536000 ; includeSubDomains
+
+信息: X-Application-Context: web-modern:prod-china,cloud:0
+
+信息: X-Content-Type-Options: nosniff
+
+信息: X-Frame-Options: DENY
+
+信息: X-Vcap-Request-Id: bf5eb331-671d-4bfc-46fd-b57fd2b018e9
+
+信息: X-Xss-Protection: 1; mode=block
+
+信息: Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+
+信息: Server: yunjiasu-nginx
+
+信息: CF-RAY: 498cbd9f5e6d8bda-SZX
+
+信息: <-- END HTTP
+
+信息: --> GET https://uiservices.movescount.com/moves/private?appkey=uFiPE28bwLykgnTlYyvlS7GzgaAcIRP3I85FCMFJUDFwTa7hcAihvk7x9SJEC5CP&email=jiawu.lu%40gmail.com&userkey=e4acbce2-4a3e-4f34-b806-d81694f59384&startDate=2018-12-26&maxcount=16
+
+信息: --> END GET
+
+信息: <-- 200 OK https://uiservices.movescount.com/moves/private?appkey=uFiPE28bwLykgnTlYyvlS7GzgaAcIRP3I85FCMFJUDFwTa7hcAihvk7x9SJEC5CP&email=jiawu.lu%40gmail.com&userkey=e4acbce2-4a3e-4f34-b806-d81694f59384&startDate=2018-12-26&maxcount=16 (1016ms)
+
+信息: Cache-Control: no-cache
+
+信息: Content-Type: application/json; charset=utf-8
+
+信息: Date: Mon, 14 Jan 2019 02:40:57 GMT
+
+信息: Expires: -1
+
+信息: Pragma: no-cache
+
+信息: Server: nginx
+
+信息: Vary: Accept-Encoding
+
+信息: Via: 1.1 3eb04a11bfe0f7e0abb7389a916f0d41.cloudfront.net (CloudFront)
+
+信息: X-Amz-Cf-Id: hf7RX3YDmS_7w2nZK0Pqql8S6dP8MZobtaFFgFVuEs9YXdAhS8TMGA==
+
+信息: X-AspNet-Version: 4.0.30319
+
+信息: X-Cache: Miss from cloudfront
+
+信息: X-Powered-By: ASP.NET
+
+信息: Connection: keep-alive
+
+信息: <-- END HTTP
+
+警告: A connection to https://connect.garmin.cn/ was leaked. Did you forget to close a response body? To see where this was allocated, set the OkHttpClient logger level to FINE: Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
+16
+
+Process finished with exit code 0

@@ -2,8 +2,10 @@ const g2m = require('./g2m');
 
 exports.main_handler = async (event, context, callback) => {
 
+    console.log(event)
     var query = event.queryString;
 
+    console.log(query)
     global.userName = query.userName
     global.password = query.password
     global.usermail = query.usermail
@@ -21,6 +23,7 @@ exports.main_handler = async (event, context, callback) => {
         }
         return response
     });
+
     console.log(newVar)
     return newVar
 };
