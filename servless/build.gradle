@@ -1,0 +1,31 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group = 'cn.lujiawu'
+version = '1.0'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(dir: 'jars', include: '*.jar')
+    compileOnly('org.projectlombok:lombok:1.16.18')
+    testCompile("junit:junit:4.12")
+    annotationProcessor "org.projectlombok:lombok:1.16.18"
+    compile project(":core")
+    compile 'com.aliyun.fc.runtime:fc-java-core:1.0.0'
+}
+
+task buildZip(type: Zip) {
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtime
+    }
+}
+
+build.dependsOn buildZip
