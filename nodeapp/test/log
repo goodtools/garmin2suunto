@@ -1,0 +1,36 @@
+/Users/wuzhong/.nvm/versions/node/v8.15.0/bin/node /Users/wuzhong/github/garmin2suunto/nodeapp/src/garmin_api.js
+<<<<<get<https://sso.garmin.cn/sso/login
+
+>>>>>get>https://sso.garmin.cn/sso/login
+<<<<<post<https://sso.garmin.cn/sso/login
+__cfduid=d867dfd7d4ac36b4e38563e89abf00c911547443798; org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE=en; SESSION=d4c53af3-4330-4b1b-b8c4-656fb061f330
+>>>>>post>https://sso.garmin.cn/sso/login
+on success
+Promise { <pending> }
+<<<<<get<https://connect.garmin.cn/modern
+__cfduid=d867dfd7d4ac36b4e38563e89abf00c911547443798; org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE=en; SESSION=d4c53af3-4330-4b1b-b8c4-656fb061f330
+>>>
+>>>>>get>https://connect.garmin.cn/modern
+<<<<<get<https://sso.garmin.cn/sso/login?service=https%3A%2F%2Fconnect.garmin.cn%2Fmodern&webhost=https%3A%2F%2Fconnect.garmin.com&gateway=true&generateExtraServiceTicket=true
+__cfduid=d867dfd7d4ac36b4e38563e89abf00c911547443798; org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE=en; SESSION=d4c53af3-4330-4b1b-b8c4-656fb061f330; SESSIONID=358970c6-6f79-4378-a6e9-3df9ec427737
+>>>>>get>https://sso.garmin.cn/sso/login?service=https%3A%2F%2Fconnect.garmin.cn%2Fmodern&webhost=https%3A%2F%2Fconnect.garmin.com&gateway=true&generateExtraServiceTicket=true
+<<<<<get<https://connect.garmin.cn/modern
+__cfduid=d867dfd7d4ac36b4e38563e89abf00c911547443798; org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE=en; SESSION=; SESSIONID=358970c6-6f79-4378-a6e9-3df9ec427737
+>>>>>get>https://connect.garmin.cn/modern
+<<<<<get<https://connect.garmin.cn/en-US/signin?service=https://connect.garmin.cn/modern
+__cfduid=d867dfd7d4ac36b4e38563e89abf00c911547443798; org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE=en; SESSION=; SESSIONID=
+>>>>>[error]get>https://connect.garmin.cn/en-US/signin?service=https://connect.garmin.cn/modern
+(node:43338) UnhandledPromiseRejectionWarning: Error: Request failed with status code 301
+undefined
+    at createError (/Users/wuzhong/github/garmin2suunto/nodeapp/node_modules/axios/lib/core/createError.js:16:15)
+    at settle (/Users/wuzhong/github/garmin2suunto/nodeapp/node_modules/axios/lib/core/settle.js:18:12)
+    at IncomingMessage.handleStreamEnd (/Users/wuzhong/github/garmin2suunto/nodeapp/node_modules/axios/lib/adapters/http.js:201:11)
+    at emitNone (events.js:111:20)
+    at IncomingMessage.emit (events.js:208:7)
+    at endReadableNT (_stream_readable.js:1064:12)
+    at _combinedTickCallback (internal/process/next_tick.js:139:11)
+    at process._tickCallback (internal/process/next_tick.js:181:9)
+(node:43338) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 3)
+(node:43338) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+
+Process finished with exit code 0

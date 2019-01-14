@@ -22,6 +22,7 @@ public class SyncBaseTest {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
 
+
         SyncInitializer.init(new AutoLoginer(), userName, key, logging);
     }
 

@@ -36,16 +36,15 @@ public class OkHttpClientManager {
         }
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.cookieJar(cookieJar)
-                .followSslRedirects(true)
-                .followRedirects(false);
-
         if (null != loggingInterceptor) {
-            builder.addInterceptor(loggingInterceptor);
+            builder.addNetworkInterceptor(loggingInterceptor);
         }
         if (null != autoLoginInterceptor) {
             builder.addInterceptor(autoLoginInterceptor);
         }
+        builder.cookieJar(cookieJar)
+                .followSslRedirects(true)
+                .followRedirects(false);
 
         okHttpClient = builder.build();
 
