@@ -11,8 +11,8 @@ var loginParmas = {
     "consumeServiceTicket": "false"
 }
 
-const axios = require('axios').create({
-});
+const axios = require('axios').create({})
+const _axios = require('axios')
 const querystring = require('querystring');
 
 var cookiejar = {
@@ -152,5 +152,23 @@ module.exports = {
     getLatest20 : function() {
         return this.search(20,0)
     },
+
+    getMove : function (id) {
+        var activityUrl = "https://connect.garmin.cn/modern/proxy/activity-service/activity/" + id;
+        var activityDetailUrl =  activityUrl + "/details";
+        var activitySplitesUrl = activityUrl + "/splits";
+        return axios.get(activityUrl)
+            .then(function (response) {
+                return _axios.all([
+                        axios.get(activityDetailUrl),
+                        axios.get(activitySplitesUrl)
+                    ])
+                    .then(_axios.spread(function(detail, splites) {
+                        console.log(response.data)
+                        console.log(detail.data,splites.data)
+                        return "123"
+                    }))
+            })
+    }
 
 };

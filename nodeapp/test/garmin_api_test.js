@@ -13,23 +13,23 @@ global.usermail = usermail
 global.userkey = userkey
 
 
-const axios = require('axios');
-axios.get("https://service-p9bx7akn-1257958482.ap-shanghai.apigateway.myqcloud.com/release/g2m_node",{
-    params: {
-        userName : userName,
-        password : password,
-        usermail : usermail,
-        userkey : userkey,
-        limit: 20,
-        start: 0
-    }
-})
-    .catch(function (e) {
-        console.log(e)
-    })
-    .then(function (response) {
-    console.log(response)
-})
+// const axios = require('axios');
+// axios.get("https://service-p9bx7akn-1257958482.ap-shanghai.apigateway.myqcloud.com/release/g2m_node",{
+//     params: {
+//         userName : userName,
+//         password : password,
+//         usermail : usermail,
+//         userkey : userkey,
+//         limit: 20,
+//         start: 0
+//     }
+// })
+//     .catch(function (e) {
+//         console.log(e)
+//     })
+//     .then(function (response) {
+//     console.log(response)
+// })
 
 
 // g2m.list({
@@ -39,4 +39,9 @@ axios.get("https://service-p9bx7akn-1257958482.ap-shanghai.apigateway.myqcloud.c
 //     .then(function (response2) {
 //         console.log(response2)
 //     })
+
+garmin.getMove(50360706)
+    .then(function (e) {
+        console.log(e)
+    })
 
