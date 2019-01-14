@@ -5,6 +5,7 @@ import cn.lujiawu.garmin2suunto.garmin.AutoLoginInterceptor;
 import cn.lujiawu.garmin2suunto.garmin.SimpleCookieJar;
 import cn.lujiawu.garmin2suunto.util.AutoLoginer;
 import cn.lujiawu.garmin2suunto.util.OkHttpClientManager;
+import okhttp3.Interceptor;
 
 public class SyncInitializer {
 
@@ -19,6 +20,20 @@ public class SyncInitializer {
 
         SimpleCookieJar simpleCookieJar = new SimpleCookieJar();
         OkHttpClientManager.init(null, new AutoLoginInterceptor(autoLogin, simpleCookieJar), simpleCookieJar);
+
+        ApiManager.init(suunUserEmail, suuntoUserKey);
+
+    }
+
+    public static void init(AutoLogin autoLogin, String suunUserEmail, String suuntoUserKey, Interceptor loggingInterceptor) {
+
+        if (inited){
+            return;
+        }
+        inited = true;
+
+        SimpleCookieJar simpleCookieJar = new SimpleCookieJar();
+        OkHttpClientManager.init(loggingInterceptor, new AutoLoginInterceptor(autoLogin, simpleCookieJar), simpleCookieJar);
 
         ApiManager.init(suunUserEmail, suuntoUserKey);
 

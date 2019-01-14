@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import cn.lujiawu.garmin2suunto.util.AutoLoginer;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 public class SyncBaseTest {
 
@@ -17,7 +18,11 @@ public class SyncBaseTest {
         }
         String userName = properties.getProperty("email");
         String key = properties.getProperty("key");
-        SyncInitializer.init(new AutoLoginer(), userName, key);
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+
+        SyncInitializer.init(new AutoLoginer(), userName, key, logging);
     }
 
 }
