@@ -23,15 +23,12 @@ public class SyncServiceTest extends SyncBaseTest {
     @Test
     public void testGetOutdoorMove() {
         SyncService syncService = new SyncService();
-        syncService.getMoveFromGarminAct(activityIdIndoor)
+        syncService.getMoveFromGarminAct(activityIdOutdoor)
                 .subscribe(move -> {
                     System.out.println(new Gson().toJson(move));
                 });
 
     }
-
-    String email = "jiawu.lu@gmail.com";
-    String key = "";
 
     @Test
     public void testMoves() {

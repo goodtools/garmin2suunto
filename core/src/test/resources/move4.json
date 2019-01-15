@@ -1,8 +1,8 @@
 {
   "ActivityID": 3,
   "AscentAltitude": 14.0,
-  "AvgRunningCadence": 182.45312,
   "AvgHR": 144,
+  "AvgRunningCadence": 182.45312,
   "AvgSpeed": 3.0939567,
   "AvgTemp": 26.32731,
   "Distance": 5974,
@@ -11,6 +11,53 @@
   "HighAltitude": 193.2,
   "LocalStartTime": "2018-12-27T13:03:38.0",
   "LowAltitude": 180.4,
+  "Marks": [
+    {
+      "DistanceFromPrevious": 1000,
+      "SplitTimeFromPrevious": 380.15,
+      "Type": 0
+    },
+    {
+      "DistanceFromPrevious": 605,
+      "SplitTimeFromPrevious": 219.85,
+      "Type": 0
+    },
+    {
+      "DistanceFromPrevious": 1000,
+      "SplitTimeFromPrevious": 337.673,
+      "Type": 0
+    },
+    {
+      "DistanceFromPrevious": 785,
+      "SplitTimeFromPrevious": 262.327,
+      "Type": 0
+    },
+    {
+      "DistanceFromPrevious": 1000,
+      "SplitTimeFromPrevious": 294.534,
+      "Type": 0
+    },
+    {
+      "DistanceFromPrevious": 1000,
+      "SplitTimeFromPrevious": 286.877,
+      "Type": 0
+    },
+    {
+      "DistanceFromPrevious": 63,
+      "SplitTimeFromPrevious": 18.589,
+      "Type": 0
+    },
+    {
+      "DistanceFromPrevious": 508,
+      "SplitTimeFromPrevious": 133.786,
+      "Type": 0
+    },
+    {
+      "DistanceFromPrevious": 11,
+      "SplitTimeFromPrevious": 2.806,
+      "Type": 0
+    }
+  ],
   "MaxRunningCadence": 202.0,
   "MaxSpeed": 4.199,
   "MaxTemp": 27.0,
@@ -1335,52 +1382,5 @@
   },
   "Track": {
     "TrackPoints": []
-  },
-  "Marks": [
-    {
-      "DistanceFromPrevious": 1000,
-      "SplitTimeFromPrevious": 380.15,
-      "Type": 0
-    },
-    {
-      "DistanceFromPrevious": 605,
-      "SplitTimeFromPrevious": 219.85,
-      "Type": 0
-    },
-    {
-      "DistanceFromPrevious": 1000,
-      "SplitTimeFromPrevious": 337.673,
-      "Type": 0
-    },
-    {
-      "DistanceFromPrevious": 785,
-      "SplitTimeFromPrevious": 262.327,
-      "Type": 0
-    },
-    {
-      "DistanceFromPrevious": 1000,
-      "SplitTimeFromPrevious": 294.534,
-      "Type": 0
-    },
-    {
-      "DistanceFromPrevious": 1000,
-      "SplitTimeFromPrevious": 286.877,
-      "Type": 0
-    },
-    {
-      "DistanceFromPrevious": 63,
-      "SplitTimeFromPrevious": 18.589,
-      "Type": 0
-    },
-    {
-      "DistanceFromPrevious": 508,
-      "SplitTimeFromPrevious": 133.786,
-      "Type": 0
-    },
-    {
-      "DistanceFromPrevious": 11,
-      "SplitTimeFromPrevious": 2.806,
-      "Type": 0
-    }
-  ]
+  }
 }

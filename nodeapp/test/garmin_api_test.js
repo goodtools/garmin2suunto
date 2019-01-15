@@ -40,8 +40,10 @@ global.userkey = userkey
 //         console.log(response2)
 //     })
 
-garmin.getMove(50360706)
+g2m.sync({
+    activityId : 50453091
+})
     .then(function (e) {
-        console.log(e)
+        console.log(JSON.stringify(e))
     })
 

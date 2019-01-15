@@ -164,9 +164,11 @@ module.exports = {
                         axios.get(activitySplitesUrl)
                     ])
                     .then(_axios.spread(function(detail, splites) {
-                        console.log(response.data)
-                        console.log(detail.data,splites.data)
-                        return "123"
+                        return {
+                            activity : response.data,
+                            splites : splites.data,
+                            detail : detail.data
+                        }
                     }))
             })
     }
