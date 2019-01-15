@@ -153,7 +153,7 @@ module.exports = {
         return this.search(20,0)
     },
 
-    getMove : function (id) {
+    getActivity : function (id) {
         var activityUrl = "https://connect.garmin.cn/modern/proxy/activity-service/activity/" + id;
         var activityDetailUrl =  activityUrl + "/details";
         var activitySplitesUrl = activityUrl + "/splits";

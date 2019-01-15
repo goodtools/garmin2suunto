@@ -1,5 +1,8 @@
 const axios = require('axios').create({
     baseURL: 'https://uiservices.movescount.com',
+    validateStatus : function (status) {
+        return (status >= 200 && status < 300) || status == 409; // default
+    }
 });
 const querystring = require('querystring');
 
@@ -41,5 +44,23 @@ module.exports = {
                 }
                 return ret;
             })
+    },
+
+    save: function (move) {
+        var querystr = querystring.stringify({
+            email: global.userName,
+            userkey: global.userkey
+        })
+        return axios.post("/moves?appkey=uFiPE28bwLykgnTlYyvlS7GzgaAcIRP3I85FCMFJUDFwTa7hcAihvk7x9SJEC5CP&" + querystr ,
+            move).then(function (response) {
+                if (response.status == 409){
+                    return {
+                        statusText : response.statusText,
+                        data : response.data
+                    }
+                }else {
+                    return response.data
+                }
+        })
     }
 }

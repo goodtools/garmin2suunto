@@ -2,8 +2,6 @@ const garmin = require('./garmin_api');
 const move = require('./move_api');
 const convert = require('./convert');
 
-
-
 module.exports = {
 
     list : function (param) {
@@ -23,11 +21,23 @@ module.exports = {
             })
     },
 
-    sync : function (param) {
-        return garmin.getMove(param.activityId)
+    getMove: function (param) {
+        return garmin.getActivity(param.activityId)
             .then(function (response) {
                 // console.log(response)
                 return convert(response.activity,response.splites,response.detail )
+            })
+    },
+
+    save: function (data) {
+        return move.save(data)
+    },
+
+    sync: function (param) {
+        var self = this;
+        return this.getMove(param)
+            .then(function (data) {
+                return self.save(data)
             })
     }
 

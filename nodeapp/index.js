@@ -10,11 +10,21 @@ async function doGet(query) {
     return newVar;
 }
 
+async function doPost(query) {
+    let newVar = await g2m.sync({
+        activityId: query.activityId
+    }).then(function (result) {
+        return result
+    });
+    return newVar;
+}
+
 exports.main_handler = async (event, context, callback) => {
 
-    console.log(event)
     var query = event.queryString;
-    console.log(query)
+    if (event.httpMethod == 'POST'){
+        query = JSON.parse(event.body)
+    }
     global.userName = query.userName
     global.password = query.password
     global.usermail = query.usermail
@@ -28,6 +38,9 @@ exports.main_handler = async (event, context, callback) => {
 
     if (event.httpMethod == 'GET'){
         let newVar = await doGet(query);
+        response.body = JSON.stringify(newVar)
+    }else if (event.httpMethod == 'POST'){
+        let newVar = await doPost(query);
         response.body = JSON.stringify(newVar)
     }
 
