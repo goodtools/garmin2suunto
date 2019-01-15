@@ -1,8 +1,8 @@
 {
   "pages":[
+    "pages/setting/input",
     "pages/index/index",
-    "pages/logs/logs",
-    "pages/setting/input"
+    "pages/logs/logs"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -22,17 +22,18 @@
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "列表",
-        "iconPath": "image/list.png",
-        "selectedIconPath": "image/list_hl.png"
-      },
+      
       {
         "pagePath": "pages/setting/input",
         "text": "设置",
         "iconPath": "image/settings.png",
         "selectedIconPath": "image/settings_hl.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "列表",
+        "iconPath": "image/list.png",
+        "selectedIconPath": "image/list_hl.png"
       },
       {
         "pagePath": "pages/index/index",
