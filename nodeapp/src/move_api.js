@@ -24,7 +24,7 @@ module.exports = {
         var searchUrl = '/moves/private?appkey=uFiPE28bwLykgnTlYyvlS7GzgaAcIRP3I85FCMFJUDFwTa7hcAihvk7x9SJEC5CP';
         return axios.get(searchUrl, {
             params: {
-                email: global.userName,
+                email: global.usermail,
                 userkey: global.userkey,
                 startDate: startdate,
                 maxcount: maxcount
@@ -48,7 +48,7 @@ module.exports = {
 
     save: function (move) {
         var querystr = querystring.stringify({
-            email: global.userName,
+            email: global.usermail,
             userkey: global.userkey
         })
         return axios.post("/moves?appkey=uFiPE28bwLykgnTlYyvlS7GzgaAcIRP3I85FCMFJUDFwTa7hcAihvk7x9SJEC5CP&" + querystr ,

@@ -1,4 +1,5 @@
 const g2m = require('./src/g2m');
+const garmin = require('./src/garmin_api');
 
 async function doGet(query) {
     let newVar = await g2m.list({
@@ -29,21 +30,29 @@ exports.main_handler = async (event, context, callback) => {
     global.password = query.password
     global.usermail = query.usermail
     global.userkey = query.userkey
+    global.garminCookie = query.cookiejar
 
     var response = {
         "isBase64Encoded": false,
-        "statusCode": 200,
-        "headers": {"Content-Type": "application/json"},
+        "statusCode": 200
     }
 
-    if (event.httpMethod == 'GET'){
-        let newVar = await doGet(query);
-        response.body = JSON.stringify(newVar)
-    }else if (event.httpMethod == 'POST'){
-        let newVar = await doPost(query);
-        response.body = JSON.stringify(newVar)
+    switch (query.action) {
+        case "list":
+            console.log("start to do list")
+            let newVar = await doGet(query);
+            response.body = JSON.stringify(newVar)
+            break;
+        case "sync":
+            console.log("start to do sync")
+            let newVar2 = await doPost(query);
+            response.body = JSON.stringify(newVar2)
+            break;
+        default:
+            break;
     }
 
+    response.headers = {"Content-Type": "application/json" , "garmin-cookie" : garmin.cookie()};
     // console.log(response)
     return response
 };

@@ -33,6 +33,9 @@ var cookiejar = {
         }
     },
     getCookieStr : function () {
+        if (global.garmincookie){
+            return global.garmincookie
+        }
         var str = ''
         for (var key in this.cookies){
             // console.log(key)
@@ -57,7 +60,8 @@ axios.interceptors.response.use(function (response) {
     // console.log(error.response.headers["set-cookie"])
     cookiejar.update(error.response.headers["set-cookie"])
     if (403 === error.response.status) {
-        // console.log("start auto login " + error.config.url)
+        console.log("start auto login " + error.config.url)
+        delete global.garmincookie
         return new Promise(function(resolve, reject) {
             garminlogin().then(function (response) {
                 axios.get(error.config.url)
@@ -137,6 +141,10 @@ axios.interceptors.request.use(function (config) {
 });
 
 module.exports = {
+
+    cookie : function(){
+        return cookiejar.getCookieStr()
+    },
 
     search : function(limit,start) {
         var searchUrl = 'https://connect.garmin.cn/modern/proxy/activitylist-service/activities/search/activities?limit='+limit+'&start='+start;
