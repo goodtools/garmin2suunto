@@ -1,0 +1,80 @@
+.scroll-view-container {
+  background-color: #fff;
+  height:100vh;
+}
+
+.data_list_24{
+  width: 24px;
+  height: 24px;
+}
+
+.data_list_20{
+  width: 18px;
+  height: 18px;
+}
+
+.flex{
+  display:flex;
+  justify-content: space-around;
+}
+
+.small {
+  font-size: 14px;
+}
+
+.info {
+  font-size: 12px;
+  margin: 20rpx 0rpx;
+  height: 100%;
+}
+
+.titlebar {
+  padding: 10px
+}
+
+/**
+隐藏 scroll-view 的滚动条
+*/
+
+/* ::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+} */
+
+.data-loading {
+  height: 100rpx;
+  line-height: 100rpx;
+  background-color: #eee;
+  text-align: center;
+  font-size: 14px;
+}
+
+.articles-container {
+  border-bottom: 1px solid #eee;
+  margin: 30rpx 10rpx;
+  background-color: #eee;
+}
+
+
+
+.articles-container .info .avatar {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 10rpx;
+  border-radius: 60rpx;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.articles-container .info .created-at {
+  margin: 0px 20rpx;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.articles-container .info .category {
+  color: #3399ea;
+  display: inline-block;
+  vertical-align: middle;
+}

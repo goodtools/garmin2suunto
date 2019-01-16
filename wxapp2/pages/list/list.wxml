@@ -1,0 +1,81 @@
+<scroll-view class='scroll-view-container' scroll-y='{{true}}'
+             bindscrolltolower='scrollToLower' bindscrolltoupper='scrollToUpper'
+             lower-threshold='30' upper-threshold='0'>
+  <block wx:for='{{ list }}' wx:key='{{ item.activityId }}' >
+    
+    <view class='articles-container' bindlongpress="longTap" data-activityId="{{ item.activityId }}" data-moveId="{{ item.move_data.MoveID }}">
+      
+      <view class='titlebar flex'>
+        <image class='data_list_24' src='../../image/data_list_icon_run.png'></image>
+        <text class='title'>2010-22-12 22:22:22 杭州市跑步</text>
+        <image class='data_list_20' src='../../image/ok.png'></image>
+      </view>
+
+      <view class='flex'>
+
+        <view>
+          <view>
+           <text class="small">11.232</text>
+          </view>
+           <view>
+            <image class='data_list_20' src='../../image/duration.png'></image>
+          </view>
+        </view> 
+
+        <view>
+          <view>
+           <text class="small">11.232</text>
+          </view>
+           <view>
+            <image class='data_list_20' src='../../image/distance.png'></image>
+          </view>
+        </view> 
+
+        <view>
+          <view>
+           <text class="small">11.232</text>
+          </view>
+           <view>
+            <image class='data_list_20' src='../../image/fire.png'></image>
+          </view>
+        </view> 
+
+      </view>
+
+      <view class='flex'>
+
+        <view>
+          <view>
+           <text class="small">11.232</text>
+          </view>
+           <view>
+            <image class='data_list_20' src='../../image/speed.png'></image>
+          </view>
+        </view> 
+
+        <view>
+          <view>
+           <text class="small">11.232</text>
+          </view>
+           <view>
+            <image class='data_list_20' src='../../image/hr.png'></image>
+          </view>
+        </view> 
+
+        <view>
+          <view>
+           <text class="small">11.232</text>
+          </view>
+           <view>
+            <image class='data_list_20' src='../../image/cadence.png'></image>
+          </view>
+        </view> 
+
+      </view>
+
+    </view>
+  </block>
+  <view class='data-loading' hidden='{{hidden}}'>
+    数据加载中...
+  </view>
+</scroll-view>
