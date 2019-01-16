@@ -13,14 +13,30 @@ Page({
         /**
          * 用于显示文章的数组
          */
-        list: [1,2,3,4,5,6],
+        list: [],
         /**
          * 数据是否正在加载中，避免用户瞬间多次下滑到底部，发生多次数据加载事件
          */
         loadingData: false
     },
     onLoad: function (options) {
-        // this.loadData(true);
+
+        this.start = 0;
+        this.setData({
+            loadingData: true
+        });
+        wx.showLoading({
+            title: '数据加载中...',
+        });
+        var that = this;
+        that.loadData(false, () => {
+            that.setData({
+                hidden: true,
+                loadingData: false
+            });
+            wx.hideLoading();
+        });
+
     },
 
     getQueryData: function () {
@@ -90,7 +106,7 @@ Page({
             title: '数据加载中...',
         });
 
-        that.start ++;
+        that.start++;
         that.loadData(true, () => {
             that.setData({
                 hidden: true,
@@ -100,29 +116,61 @@ Page({
         });
     },
     scrollToUpper: function (e) {
-        this.start = 0;
-        this.setData({
-            loadingData: true
-        });
+        this.onLoad();
+    },
+    longTap: function (e) {
+        var current = e.currentTarget.dataset
+        if(current.moveid){
+          return
+        }
+        var that = this;
+        wx.showModal({
+            title: '提示',
+            content: '将当期活动数据同步到move?',
+            showCancel: true,
+            success(res) {
+                if (res.confirm) {
+                    that.onSync(current.activityid)
+                } else if (res.cancel) {
+                    console.log('用户点击取消')
+                }
+            }
+        })
+    },
+
+    onSync: function (activityId) {
+
         wx.showLoading({
-            title: '数据重新加载中...',
+            title: '正在同步',
         });
         var that = this;
-        that.loadData(false, () => {
-            that.setData({
-                hidden: true,
-                loadingData: false
-            });
+        that.sync(activityId, () => {
             wx.hideLoading();
+            that.onLoad()
         });
+
     },
-  longTap: function (e) {
-    console.log(e.target.dataset)
-    wx.showModal({
-      title: '提示',
-      content: '长按事件被触发',
-      showCancel: false
-    })
-  }
+
+    sync: function (activityId, callback) {
+        var that = this;
+        var query = this.getQueryData();
+        query.action = "sync"
+        query.activityId = activityId;
+        wx.request({
+            data: query,
+            url: that.apiurl,
+            method: 'POST',
+            success: function (r) {
+                if (callback) {
+                    callback();
+                }
+            },
+            error: function (r) {
+                console.info('error', r);
+            },
+            complete: function () {
+            }
+        })
+    },
 
 })

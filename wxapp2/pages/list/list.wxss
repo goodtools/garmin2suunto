@@ -18,6 +18,11 @@
   justify-content: space-around;
 }
 
+.flexview {
+  display: flex;
+  justify-content: center;  
+}
+
 .small {
   font-size: 14px;
 }
@@ -54,6 +59,7 @@
   border-bottom: 1px solid #eee;
   margin: 30rpx 10rpx;
   background-color: #eee;
+  padding-bottom: 10px;
 }
 
 
