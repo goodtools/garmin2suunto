@@ -1,4 +1,56 @@
-module.exports = function convert(activity, splits, detail) {
+function convertSimple(activity, move) {
+
+    var fitVO = {};
+    fitVO.activityId = activity.activityId;
+    if (move){
+        fitVO.moveId = move.MoveID;
+    }
+    fitVO.title = (activity.startTimeLocal.substring(5, 16) + " " + activity.activityName);
+//        "running", "cycling"
+    var type = activity.activityType.typeKey;
+    if ("running" == (type)) {
+        if (null != activity.startLatitude) {
+            fitVO.type = ("run");
+        }else {
+            fitVO.type = ("treadmill");
+        }
+    }else if ("treadmill_running" == (type)) {
+        fitVO.type = "treadmill";
+    }else if ("cycling" == (type)) {
+        fitVO.type =("bike");
+    }else {
+        fitVO.type =("run");
+    }
+    fitVO.duration = formatDuration(activity.duration);
+    fitVO.distance = (activity.distance / 1000).toFixed(2);
+    fitVO.calories = activity.calories.toFixed(1);
+    fitVO.speed = (activity.averageSpeed * 3.6).toFixed(1) + "/" + (activity.maxSpeed * 3.6).toFixed(1);
+    fitVO.hr = activity.averageHR.toFixed(1) + "/" + activity.maxHR.toFixed(1);
+    fitVO.cadence = activity.averageRunningCadenceInStepsPerMinute.toFixed(1) + "/" + activity.maxRunningCadenceInStepsPerMinute.toFixed(1);
+    return fitVO;
+
+
+}
+
+function formatDuration(duration) {
+
+    var absSeconds = Number.parseInt(duration.toFixed(0));
+    var hour = (absSeconds / 3600).toFixed(0);
+    var minute = ((absSeconds % 3600) / 60).toFixed(0);
+    if (hour < 10){
+        hour = "0" + hour;
+    }
+    if (minute < 10){
+        minute = "0" + minute;
+    }
+    return hour + ":" + minute
+
+}
+
+
+
+
+function convertMove(activity, splits, detail) {
 
     var move = {}
     move.Notes = getNotes(activity);
@@ -208,4 +260,9 @@ function getMetricIndex(descriptors) {
         }
     }
     return index
+}
+
+module.exports = {
+    convertMove,
+    convertSimple
 }

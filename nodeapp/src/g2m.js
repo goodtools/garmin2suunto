@@ -12,10 +12,11 @@ module.exports = {
                     var startDate = startTimeLocal.split(" ")[0];
                     return move.list(startDate, response.length)
                         .then(function (map) {
+                            var list = [];
                             response.forEach(function (data) {
-                                data.move_data = map[data.activityId]
+                                list.push(convert.convertSimple(data,map[data.activityId]))
                             })
-                            return response;
+                            return list;
                         })
                 }
             })
@@ -25,7 +26,7 @@ module.exports = {
         return garmin.getActivity(param.activityId)
             .then(function (response) {
                 // console.log(response)
-                return convert(response.activity,response.splites,response.detail )
+                return convert.convertMove(response.activity,response.splites,response.detail )
             })
     },
 
