@@ -1,0 +1,49 @@
+<view class="container">
+
+  <form catchsubmit="formSubmit" catchreset="formReset">
+    <view class="page-section">
+      <view class="weui-cells__title">garmin账号</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <input class="weui-input" maxlength="40"  name="username" auto-focus placeholder="请输入" value="{{ username }}" />
+        </view>
+      </view>
+    </view>
+
+    <view class="page-section">
+      <view class="weui-cells__title">garmin密码</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <input class="weui-input" maxlength="40" name="password" password type="text" placeholder="请输入" value="{{ password }}" />
+        </view>
+      </view>
+    </view>
+
+    <view class="page-section">
+      <view class="weui-cells__title">move账号</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <input class="weui-input" maxlength="40" name="email" placeholder="请输入" value="{{ email }}" />
+        </view>
+      </view>
+    </view>
+
+    <view class="page-section">
+      <view class="weui-cells__title">move key</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <input class="weui-input" maxlength="40" name="key" placeholder="请输入" value="{{ key }}" />
+        </view>
+      </view>
+    </view>
+
+    <view class="page-section">
+      <view class="weui-cells__title link">首次使用请授权: http://www.movescount.cn/zh/settings#connections</view>
+    </view>
+
+    <view class="btn-area">
+      <button type="primary" formType="submit">保存</button>
+    </view>
+  </form>
+
+</view>

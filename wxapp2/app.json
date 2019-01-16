@@ -1,6 +1,6 @@
 {
   "pages":[
-    "pages/setting/input",
+    "pages/setting/setting",
     "pages/index/index",
     "pages/logs/logs"
   ],
@@ -24,7 +24,7 @@
     "list": [
       
       {
-        "pagePath": "pages/setting/input",
+        "pagePath": "pages/setting/setting",
         "text": "设置",
         "iconPath": "image/settings.png",
         "selectedIconPath": "image/settings_hl.png"

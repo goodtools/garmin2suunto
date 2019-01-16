@@ -7,6 +7,7 @@ label {
   min-width: 270rpx;
   margin-right: 20rpx;
 }
+
 form{
   width: 100%;
 }
@@ -17,4 +18,12 @@ form{
 
 input.weui-input {
   width: 100%
+}
+
+button {
+  margin: 20rpx 60rpx;
+}
+
+.link{
+  word-break: break-all;
 }
