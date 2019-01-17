@@ -21,6 +21,8 @@ Page({
     },
     onLoad: function (options) {
 
+      var param = util.getSetting();
+      if(param.username && param.email && param.password){
         this.start = 0;
         this.setData({
             loadingData: true
@@ -36,6 +38,12 @@ Page({
             });
             wx.hideLoading();
         });
+      }else{
+        console.log(param)
+        wx.switchTab({
+          url: '/pages/setting/setting',
+        })
+      }
 
     },
 
