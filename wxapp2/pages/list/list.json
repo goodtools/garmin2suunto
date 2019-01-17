@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "运动记录"
+  "navigationBarTitleText": "运动记录",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 20
 }

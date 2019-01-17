@@ -23,6 +23,12 @@
   justify-content: center;  
 }
 
+.flexitem{
+  display: block;
+  /*display: inline-block;*/
+  vertical-align: middle;
+}
+
 .small {
   font-size: 14px;
 }
@@ -37,6 +43,15 @@
   padding: 10px
 }
 
+.list{
+  overflow:auto;
+  margin:auto;
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+}
 /**
 隐藏 scroll-view 的滚动条
 */
@@ -61,8 +76,6 @@
   background-color: #eee;
   padding-bottom: 10px;
 }
-
-
 
 .articles-container .info .avatar {
   width: 60rpx;
