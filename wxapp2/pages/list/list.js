@@ -18,6 +18,7 @@ Page({
   },
 
   onShow: function(options) {
+    console.log(param)
     var param = util.getSetting();
     if (param.username && param.email && param.password ) {
       if (this.data.list.length == 0){
@@ -63,13 +64,25 @@ Page({
     }
     var that = this;
     var query = this.getQueryData();
+    var showToast = false
     query.action = "list"
     wx.request({
       data: query,
       url: that.apiurl,
       method: 'POST',
       success: function(r) {
-        // console.log(r)
+
+        console.log(r)
+        if(r.statusCode != 200){
+          showToast = true
+          wx.showToast({
+            title: '加载失败 ' + r.errMsg,
+            icon: 'none',
+            duration: 2000
+          })
+          return;
+        }
+        
         that.garmincookie = r.header["Garmin-Cookie"];
         var lastList = that.data.list,
           fullList = more ? lastList.concat(r.data) : r.data;
@@ -83,10 +96,10 @@ Page({
         }
       },
       error: function(r) {
-        // console.info('error', r);
+        console.info('error', r);
       },
       complete: function() {
-        wx.hideLoading();
+        showToast || wx.hideLoading();
         wx.hideNavigationBarLoading();
         that.setData({
           loadingData: false

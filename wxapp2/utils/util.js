@@ -24,9 +24,19 @@ module.exports = {
     setting = wx.getStorageSync("settings")
     return setting;
   },
-  saveSetting: function(value){
+  saveSetting: function(value, success){
+    // console.log(value);
     setting = value;
-    wx.setStorageSync("settings", value)
+    wx.setStorage({
+      key: 'settings',
+      data: value,
+      success: function () {
+        if(null != success){
+          success();
+        }
+      }
+    });
+
   },
   uuid: function(){
     var d = Date.now();
