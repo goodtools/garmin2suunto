@@ -19,8 +19,10 @@ Page({
 
   onShow: function(options) {
     var param = util.getSetting();
-    if (param.username && param.email && param.password && this.data.list.length == 0) {
-      this.doLoadData(false)
+    if (param.username && param.email && param.password ) {
+      if (this.data.list.length == 0){
+        this.doLoadData(false)
+      }
     } else {
       // console.log(param)
       wx.switchTab({

@@ -72,7 +72,7 @@
 
 .articles-container {
   border-bottom: 1px solid #eee;
-  margin: 30rpx 10rpx;
+  margin: 30rpx 30rpx;
   background-color: #eee;
   padding-bottom: 10px;
 }
