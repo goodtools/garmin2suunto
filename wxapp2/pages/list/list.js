@@ -98,22 +98,36 @@ Page({
 
     onLongTap: function (e) {
         var current = e.currentTarget.dataset
-        if (current.moveid) {
-            return
-        }
+        // if (current.moveid) {
+        //     return
+        // }
         var that = this;
-        wx.showModal({
-            title: '提示',
-            content: '将当期活动数据同步到move?',
-            showCancel: true,
+        var itemList = ['复制garmin链接']
+        if (current.moveid){
+            itemList.push('复制move链接')
+        } else {
+            itemList.push('立即同步')
+        }
+        wx.showActionSheet({
+            itemList: itemList,
             success(res) {
-                if (res.confirm) {
-                    that.doSync(current.activityid, () => {
-                        that.doLoadData(true)
+                console.log(res)
+                if (res.tapIndex == 0){
+                    wx.setClipboardData({
+                        data: "https://connect.garmin.cn/modern/activity/" + current.activityid
                     });
-                } else if (res.cancel) {
-                    console.log('用户点击取消')
+                }else if (current.moveid) {
+                    wx.setClipboardData({
+                        data: "http://www.movescount.com/moves/move" + current.moveid
+                    });
+                }else {
+                    that.doSync(current.activityid, () => {
+                        that.doLoadData(false)
+                    });
                 }
+            },
+            fail(res) {
+                console.log(res.errMsg)
             }
         })
     },
@@ -138,6 +152,11 @@ Page({
             },
             error: function (r) {
                 console.info('error', r);
+                wx.showToast({
+                    title: '同步失败',
+                    icon: 'none',
+                    duration: 2000
+                })
             },
             complete: function () {
                 wx.hideLoading();
