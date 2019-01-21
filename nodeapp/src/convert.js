@@ -26,7 +26,11 @@ function convertSimple(activity, move) {
     fitVO.calories = activity.calories.toFixed(1);
     fitVO.speed = (activity.averageSpeed * 3.6).toFixed(1) + "/" + (activity.maxSpeed * 3.6).toFixed(1);
     fitVO.hr = activity.averageHR.toFixed(1) + "/" + activity.maxHR.toFixed(1);
-    fitVO.cadence = activity.averageRunningCadenceInStepsPerMinute.toFixed(1) + "/" + activity.maxRunningCadenceInStepsPerMinute.toFixed(1);
+    if (activity.averageRunningCadenceInStepsPerMinute) {
+        fitVO.cadence = activity.averageRunningCadenceInStepsPerMinute.toFixed(1) + "/" + activity.maxRunningCadenceInStepsPerMinute.toFixed(1);
+    }else {
+        fitVO.cadence = "-";
+    }
     return fitVO;
 
 
