@@ -13,9 +13,9 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'jars', include: '*.jar')
-    compileOnly('org.projectlombok:lombok:1.16.18')
+    compileOnly('org.projectlombok:lombok:1.18.4')
     testCompile("junit:junit:4.12")
-    annotationProcessor "org.projectlombok:lombok:1.16.18"
+    annotationProcessor "org.projectlombok:lombok:1.18.4"
     compile project(":core")
     compile 'com.aliyun.fc.runtime:fc-java-core:1.0.0'
     testCompile 'com.squareup.okhttp3:logging-interceptor:3.12.0'
