@@ -1,6 +1,7 @@
 package cn.lujiawu.garmin2suunto.garmin;
 
 import cn.lujiawu.garmin2suunto.util.OkHttpClientManager;
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -12,13 +13,21 @@ public class GarminConnectApi {
 
         OkHttpClient client = OkHttpClientManager.getInstance();
 
+        String csrf = "";
         try(Response response = client.newCall(GarminConfiguration.getLoginPageRequest()).execute();){
             if (!response.isSuccessful()) {
                 return false;
             }
+
+            String string = response.body().string();
+            String prefix = "<input type=\"hidden\" name=\"_csrf\" value=\"";
+            int length = prefix.length();
+            int start = string.indexOf(prefix) + length;
+            int end = string.indexOf("\"",start);
+            csrf = string.substring(start,end);
         }
 
-        try(Response submit = client.newCall(GarminConfiguration.getLoginSubmitPostRequest(userName, password)).execute();){
+        try(Response submit = client.newCall(GarminConfiguration.getLoginSubmitPostRequest(userName, password,csrf)).execute();){
             if (!submit.isSuccessful()) {
                 return false;
             }
