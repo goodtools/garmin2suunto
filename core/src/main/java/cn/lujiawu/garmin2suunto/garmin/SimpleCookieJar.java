@@ -1,5 +1,6 @@
 package cn.lujiawu.garmin2suunto.garmin;
 
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 

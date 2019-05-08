@@ -56,6 +56,9 @@ public class GarminConfiguration {
                 .add("password", password);
         RequestBody requestBody = builder.build();
         Request request = new Request.Builder().url(url).post(requestBody)
+                .header("origin","https://sso.garmin.cn")
+                .header("authority","sso.garmin.cn")
+                .header("accept-language","zh,en-US;q=0.9,en;q=0.8,zh-TW;q=0.7,zh-CN;q=0.6,ja;q=0.5")
                 .build();
 
         return request;

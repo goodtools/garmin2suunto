@@ -20,7 +20,7 @@ public class SyncBaseTest {
         String key = properties.getProperty("key");
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        logging.setLevel(HttpLoggingInterceptor.Level.NONE);
 
 
         SyncInitializer.init(new AutoLoginer(), userName, key, logging);

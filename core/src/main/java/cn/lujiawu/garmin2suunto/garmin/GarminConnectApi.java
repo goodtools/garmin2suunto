@@ -19,12 +19,12 @@ public class GarminConnectApi {
                 return false;
             }
 
-            String string = response.body().string();
-            String prefix = "<input type=\"hidden\" name=\"_csrf\" value=\"";
-            int length = prefix.length();
-            int start = string.indexOf(prefix) + length;
-            int end = string.indexOf("\"",start);
-            csrf = string.substring(start,end);
+//            String string = response.body().string();
+//            String prefix = "<input type=\"hidden\" name=\"_csrf\" value=\"";
+//            int length = prefix.length();
+//            int start = string.indexOf(prefix) + length;
+//            int end = string.indexOf("\"",start);
+//            csrf = string.substring(start,end);
         }
 
         try(Response submit = client.newCall(GarminConfiguration.getLoginSubmitPostRequest(userName, password,csrf)).execute();){
