@@ -2,11 +2,13 @@ var MODERN_URL = "https://connect.garmin.cn/modern";
 const GARMIN_CN = "https://connect.garmin.cn";
 const SSO_GARMIN_CN = "https://sso.garmin.cn";
 
-var loginpage = 'https://sso.garmin.cn/sso/login'
+var loginpage = 'https://sso.garmin.cn/sso/signin'
 
 var loginParmas = {
     "service": MODERN_URL,
     "clientId": "GarminConnect",
+    "locale": "zh",
+    "id": "gauth-widget",
     "gauthHost": SSO_GARMIN_CN + "/sso",
     "consumeServiceTicket": "false"
 }
@@ -51,12 +53,12 @@ axios.defaults.validateStatus = function (status) {
     return (status >= 200 && status < 300) || status == 302; // default
 }
 axios.interceptors.response.use(function (response) {
-    // console.log(">>>>>" + response.config.method + ">" + response.config.url)
-    // console.log(response.headers["set-cookie"])
+    console.log(">>>>>" + response.config.method + ">" + response.config.url)
+    console.log(response.headers["set-cookie"])
     cookiejar.update(response.headers["set-cookie"])
     return response;
 }, function (error) {
-    // console.log(">>>>>[error]" + error.response.config.method + ">" + error.response.config.url)
+    console.log(">>>>>[error]" + error.response.config.method + ">" + error.response.config.url)
     // console.log(error.response.headers["set-cookie"])
     cookiejar.update(error.response.headers["set-cookie"])
     if (403 === error.response.status) {
@@ -113,12 +115,17 @@ function garminlogin() {
     return axios.get(loginpage, loginParmas)
         .then(function (response) {
             // console.log(response)
+            var headers = {
+                "origin":"https://sso.garmin.cn",
+                "authority":"sso.garmin.cn",
+                "accept-language":"zh,en-US;q=0.9,en;q=0.8,zh-TW;q=0.7,zh-CN;q=0.6,ja;q=0.5"
+            }
             return axios.post(loginpage, querystring.stringify({
                 "_eventId": "submit",
                 "embed": "true",
                 "username": global.userName,
                 "password": global.password
-            }))
+            }), {headers: headers})
         })
         .then(function (response) {
             // console.log(response)
