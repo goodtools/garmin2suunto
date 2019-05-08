@@ -53,12 +53,12 @@ axios.defaults.validateStatus = function (status) {
     return (status >= 200 && status < 300) || status == 302; // default
 }
 axios.interceptors.response.use(function (response) {
-    console.log(">>>>>" + response.config.method + ">" + response.config.url)
-    console.log(response.headers["set-cookie"])
+    // console.log(">>>>>" + response.config.method + ">" + response.config.url)
+    // console.log(response.headers["set-cookie"])
     cookiejar.update(response.headers["set-cookie"])
     return response;
 }, function (error) {
-    console.log(">>>>>[error]" + error.response.config.method + ">" + error.response.config.url)
+    // console.log(">>>>>[error]" + error.response.config.method + ">" + error.response.config.url)
     // console.log(error.response.headers["set-cookie"])
     cookiejar.update(error.response.headers["set-cookie"])
     if (403 === error.response.status) {
